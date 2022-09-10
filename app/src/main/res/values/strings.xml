@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyRecipes</string>
+    <string name="remove">Remove</string>
+    <string name="menu_edit">Edit</string>
+    <string name="newrecipe" translatable="false">new recipe</string>
+    <string name="author">Author</string>
+    <string name="name">Name</string>
+    <string name="category">Category</string>
+    <string name="description_save" translatable="false">save</string>
+    <string name="choose_country">Choose country</string>
+</resources>

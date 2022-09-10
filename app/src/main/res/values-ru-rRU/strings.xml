@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Рецепты</string>
+    <string name="remove">Удалить</string>
+    <string name="menu_edit">Изменить</string>
+    <string name="author">Автор</string>
+    <string name="name">Название</string>
+    <string name="category">Категория</string>
+    <string name="choose_country">Выбрать вид кухни</string>
+</resources>

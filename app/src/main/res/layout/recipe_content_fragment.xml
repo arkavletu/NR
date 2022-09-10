@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".RecipeContentFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/input"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/enterAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:hint="@string/author"
+            android:inputType="textMultiLine"
+            />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/enterName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/enterAuthor"
+            android:hint="@string/name"
+            android:inputType="textMultiLine"
+
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/enterCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/enterName"
+            android:hint="@string/category"
+            android:inputType="textMultiLine"
+
+            />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/category"
+                style = "@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                android:text="@string/choose_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                app:layout_constraintTop_toBottomOf ="@+id/enterCategory"
+                app:layout_constraintStart_toStartOf="parent"
+                app:icon="@drawable/ic_baseline_place_48"
+                />
+<!--        <CheckBox-->
+<!--            android:id="@+id/one"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/enterName"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/label_1"/>-->
+<!--        <CheckBox-->
+<!--            android:id="@+id/two"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/one"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/label_2"/>-->
+<!--        <CheckBox-->
+<!--            android:id="@+id/three"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/two"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/label_3"/>-->
+<!--        <CheckBox-->
+<!--            android:id="@+id/four"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/three"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/label_4"/>-->
+<!--        <CheckBox-->
+<!--            android:id="@+id/five"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/four"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/label_5"/>-->
+<!--        <CheckBox-->
+<!--            android:id="@+id/six"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/five"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/label_6"/>-->
+<!--        <CheckBox-->
+<!--            android:id="@+id/seven"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/six"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/label_7"/>-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:fabAlignmentMode="center"
+        android:layout_gravity="bottom"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/description_save"
+        app:layout_anchor="@id/bottomAppBar"
+        app:srcCompat="@drawable/save_48" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
