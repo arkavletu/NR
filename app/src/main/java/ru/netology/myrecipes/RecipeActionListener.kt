@@ -1,7 +1,7 @@
 package ru.netology.myrecipes
 
 interface RecipeActionListener {
-//        fun onLikeClicked(post: Post)
+        fun onLikeClicked(recipe: Recipe)
 //        fun onShareClicked(post: Post)
         fun onFabClicked()
         fun onDeleteClicked(recipe: Recipe)

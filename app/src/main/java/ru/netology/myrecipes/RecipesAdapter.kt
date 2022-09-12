@@ -6,6 +6,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import ru.netology.myrecipes.bd.RecipesActions
 import ru.netology.myrecipes.databinding.RecipeBinding
 
 internal class RecipesAdapter(
@@ -47,7 +48,8 @@ internal class RecipesAdapter(
                             true
                         }
                         R.id.edit -> {
-                            listener.onEditClicked(recipe)
+
+                            //listener.save(recipe) to do
                             true
                         }
 //
@@ -58,10 +60,10 @@ internal class RecipesAdapter(
             }
         }
 
-//        init {
-//            binding.likes.setOnClickListener {
-//                listener.onLikeClicked(post)
-//            }
+        init {
+            binding.favor.setOnClickListener {
+                listener.onLikeClicked(recipe)
+            }
 //            binding.share.setOnClickListener {
 //                listener.onShareClicked(post)
 //            }
@@ -72,7 +74,7 @@ internal class RecipesAdapter(
 //                listener.onPlayClicked(post)
 //            }
 //
-//        }
+        }
 
         fun bind(recipe: Recipe) {
             this.recipe = recipe
@@ -82,7 +84,7 @@ internal class RecipesAdapter(
                 name.text = recipe.name
                 category.text = recipe.category
                 options.setOnClickListener { popupMenu.show() }
-
+                favor.isChecked = recipe.isFavorite
             }
         }
     }

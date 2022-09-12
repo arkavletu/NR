@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import ru.netology.myrecipes.bd.AppBd
+import ru.netology.myrecipes.bd.RecipesActionImpl
+import ru.netology.myrecipes.bd.RecipesActions
 import ru.netology.myrecipes.databinding.ListFragmentBinding
 
 class ListFragment: Fragment() {
@@ -83,8 +86,8 @@ class ListFragment: Fragment() {
     ) = ListFragmentBinding.inflate(layoutInflater, container, false).also {
         val adapter = RecipesAdapter(viewModel)
         it.list.adapter = adapter
-        viewModel.data.observe(viewLifecycleOwner) { posts ->
-            adapter.submitList(posts)
+        viewModel.data.observe(viewLifecycleOwner) { recipes ->
+            adapter.submitList(recipes)// выгрузить и открыть
         }
         it.fab.setOnClickListener {
             viewModel.onFabClicked()

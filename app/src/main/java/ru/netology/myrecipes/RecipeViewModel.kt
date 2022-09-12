@@ -3,11 +3,16 @@ package ru.netology.myrecipes
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import ru.netology.myrecipes.bd.AppBd
 
 class RecipeViewModel(
     application: Application
 ): AndroidViewModel(application), RecipeActionListener {
-    private val repo: RecipeRepo = RecipeRepoImplFiles(application)
+    private val repo: RecipeRepo = SQLiteRepo(
+        recipeActions = AppBd.getInstance(
+            context = application
+        ).recipesActions
+    )
     val data by repo::data
     val currentRecipe = MutableLiveData<Recipe?>(null)
 //    val sharePost = SingleLiveEvent<String>()
@@ -34,8 +39,8 @@ var contentArray: Array<String> = emptyArray()
         currentRecipe.value = null
     }
 
-//    override fun onLikeClicked(post: Post) =
-//        repo.like(post.id)
+    override fun onLikeClicked(recipe: Recipe) =
+        repo.like(recipe.id)
 //
 //
 //    override fun onShareClicked(post: Post) {

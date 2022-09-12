@@ -48,14 +48,13 @@ class RecipeRepoImplFiles (
 
         }
 
-//        override fun like(postId: Long) {
-//            posts = posts.map {
-//                if (it.id == postId) it.copy(
-//                    liked = !it.liked,
-//                    countLikes = if (!it.liked) 1 else 0
-//                ) else it
-//            }
-//        }
+        override fun like(rId: Long) {
+            recipes = recipes.map {
+                if (it.id == rId) it.copy(
+                    isFavorite = !it.isFavorite,
+                ) else it
+            }
+        }
 //
 //        override fun share(postId: Long) {
 //            posts =

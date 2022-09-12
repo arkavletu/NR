@@ -30,11 +30,22 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/options"
             style="@style/Widget.App.Button.OutlinedButton.IconOnly"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:checkable="true"
             app:icon="@drawable/options"
             />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/favor"
+            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            app:icon="@drawable/favorite"
+            app:iconTint="@color/favorite_tint"
+
+            />
+
     </com.google.android.material.button.MaterialButtonToggleGroup>
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/category"
@@ -54,6 +65,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Автор" />
+
+
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/header_barrier"
         android:layout_width="0dp"

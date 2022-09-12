@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 
 interface RecipeRepo {
     val data: LiveData<List<Recipe>>
-//    fun like(rId: Long)
+    fun like(rId: Long)
 //    fun share(rId: Long)
     fun delete(rId: Long)
     fun save(recipe: Recipe)

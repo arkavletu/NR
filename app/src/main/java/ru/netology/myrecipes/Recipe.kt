@@ -5,5 +5,6 @@ package ru.netology.myrecipes
         val name: String,
         val category: String,//enum
         //val steps: MutableLiveData<List<Step>> = MutableLiveData(emptyList()),
-        var id: Long = 0L
+        var id: Long = 0L,
+        var isFavorite: Boolean = false
     )

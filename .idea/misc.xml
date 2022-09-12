@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/drawable/favorite.xml" value="0.161" />
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.161" />
+        <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/drawable/ic_baseline_place_48.xml" value="0.161" />
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/drawable/options.xml" value="0.161" />
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/layout/activity_main.xml" value="0.17074275362318841" />
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/layout/list_fragment.xml" value="0.1" />
