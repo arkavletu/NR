@@ -7,6 +7,7 @@ import ru.netology.myrecipes.Recipe
 class RecipesActionImpl(
     private val bd: SQLiteDatabase
 ): RecipesActions {
+
     override fun getAll() = bd.query(
         RecipesTable.NAME,
         RecipesTable.ALL_COLUMNS_NAMES,
@@ -16,6 +17,7 @@ class RecipesActionImpl(
           List(cursor.count){
               cursor.moveToNext()
               cursor.toRecipe()
+
           }
         }
 

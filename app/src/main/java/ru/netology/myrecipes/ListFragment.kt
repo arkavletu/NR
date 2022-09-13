@@ -87,7 +87,7 @@ class ListFragment: Fragment() {
         val adapter = RecipesAdapter(viewModel)
         it.list.adapter = adapter
         viewModel.data.observe(viewLifecycleOwner) { recipes ->
-            adapter.submitList(recipes)// выгрузить и открыть
+            adapter.submitList(recipes)
         }
         it.fab.setOnClickListener {
             viewModel.onFabClicked()

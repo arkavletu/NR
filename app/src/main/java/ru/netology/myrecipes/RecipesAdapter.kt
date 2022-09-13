@@ -6,6 +6,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import ru.netology.myrecipes.bd.RecipesActionImpl
 import ru.netology.myrecipes.bd.RecipesActions
 import ru.netology.myrecipes.databinding.RecipeBinding
 
@@ -49,7 +50,7 @@ internal class RecipesAdapter(
                         }
                         R.id.edit -> {
 
-                            //listener.save(recipe) to do
+                            listener.onEditClicked(recipe)
                             true
                         }
 //

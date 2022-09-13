@@ -6,8 +6,8 @@ import ru.netology.myrecipes.bd.RecipesActions
 class SQLiteRepo(
     val recipeActions: RecipesActions
 ): RecipeRepo {
-
-    override val data: MutableLiveData<List<Recipe>> = MutableLiveData(recipeActions.getAll())
+    private var recipes = recipeActions.getAll()//checkNotNull(data.value) { "no nullable" }
+    override val data: MutableLiveData<List<Recipe>> = MutableLiveData(recipes)//MutableLiveData(recipeActions.getAll())
 
     override fun like(rId: Long) {
         recipeActions.addToFavorites(rId)
@@ -16,16 +16,21 @@ class SQLiteRepo(
                 isFavorite = !it.isFavorite,
             ) else it
         }
+        data.value = recipes
+
     }
 
     override fun delete(rId: Long) {
         recipeActions.remove(rId)
         recipes = recipes.filter { it.id != rId }
+        data.value = recipes
+
     }
 
     override fun save(recipe: Recipe) {
         val saved = recipeActions.save(recipe)
             if (recipe.id == RecipeRepo.NEWID) insert(saved) else update(saved)
+        data.value = recipes
     }
 
 
@@ -40,7 +45,7 @@ class SQLiteRepo(
 
     }
 
-    private var recipes = checkNotNull(data.value) { "no nullable" }
+
 
 
 }

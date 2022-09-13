@@ -4,10 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import ru.netology.myrecipes.bd.AppBd
+import ru.netology.myrecipes.bd.RecipesActions
 
 class RecipeViewModel(
     application: Application
-): AndroidViewModel(application), RecipeActionListener {
+): AndroidViewModel(application),RecipeActionListener {
     private val repo: RecipeRepo = SQLiteRepo(
         recipeActions = AppBd.getInstance(
             context = application
@@ -21,6 +22,7 @@ class RecipeViewModel(
 //    val navigateToPostFragment = SingleLiveEvent<Long>()
 //    val navigateToFirstFragment = SingleLiveEvent<Unit>()
 var contentArray: Array<String> = emptyArray()
+
     fun onSaveClicked(array: Array<String>){
         if (array[0].isBlank()||array[1].isBlank()||array[2].isBlank()) return
 
