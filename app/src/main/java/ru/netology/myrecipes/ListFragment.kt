@@ -7,9 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import ru.netology.myrecipes.bd.AppBd
-import ru.netology.myrecipes.bd.RecipesActionImpl
-import ru.netology.myrecipes.bd.RecipesActions
 import ru.netology.myrecipes.databinding.ListFragmentBinding
 
 class ListFragment: Fragment() {

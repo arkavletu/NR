@@ -2,10 +2,16 @@ package ru.netology.myrecipes.bd
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import ru.netology.myrecipes.bd.RecipesTable.DDL
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
 
-class AppBd private constructor(bd: SQLiteDatabase){
-    val recipesActions: RecipesActions = RecipesActionImpl(bd)
+@Database(
+    entities = [RecipeEntity::class],
+    version = 1
+)
+abstract class AppBd: RoomDatabase() {
+    abstract val recipesActions: RecipesActions
 
     companion object {
         @Volatile
@@ -13,14 +19,13 @@ class AppBd private constructor(bd: SQLiteDatabase){
 
         fun getInstance(context: Context): AppBd {
             return instance ?: synchronized(this) {
-                instance ?: AppBd(
-                    buildDatabase(context, arrayOf(RecipesTable.DDL))
-                ).also { instance = it }
+                instance ?: buildDatabase(context)
+                .also { instance = it }
             }
         }
 
-        private fun buildDatabase(context: Context, DDLs: Array<String>) = BdHelper(
-            context, 1, "app.bd", DDLs,
-        ).writableDatabase
+        private fun buildDatabase(context: Context) = Room.databaseBuilder(
+            context,AppBd::class.java,"AppBd"
+        ).allowMainThreadQueries().build()
     }
 }

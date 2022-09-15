@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import ru.netology.myrecipes.bd.AppBd
-import ru.netology.myrecipes.bd.RecipesActions
 
 class RecipeViewModel(
     application: Application
