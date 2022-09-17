@@ -17,8 +17,8 @@ interface RecipesActions {
     @Insert
     fun insert(recipe: RecipeEntity)
 
-    @Query("UPDATE recipes SET author = :author WHERE id = :id")// и остальные поля
-    fun updateContentById(id: Long, author: String)
+    @Query("UPDATE recipes SET author = :author, name = :name, category = :category WHERE id = :id")// и остальные поля
+    fun updateContentById(id: Long, author: String, name: String, category: String)
 
 //    fun save(recipe: RecipeEntity) =
 //        if (recipe.id == 0L) insert(recipe) else updateContentById(recipe.id, recipe.author)

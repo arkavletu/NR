@@ -26,7 +26,7 @@ class SQLiteRepo(
 
     override fun save(recipe: Recipe) {
         if (recipe.id == RecipeRepo.NEWID) recipeActions.insert(recipe.toEntity())
-        else recipeActions.updateContentById(recipe.id, recipe.author)
+        else recipeActions.updateContentById(recipe.id, recipe.author, recipe.name,recipe.category)
 
     }
 
