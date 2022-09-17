@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_listFragment_to_recipeContentFragment"
             app:destination="@id/recipeContentFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_singleRecipeFragment"
+            app:destination="@id/singleRecipeFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_favoriteRecipesFragment"
+            app:destination="@id/favoriteRecipesFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeContentFragment"
@@ -34,5 +40,32 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="null" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleRecipeFragment"
+        android:name="ru.netology.myrecipes.SingleRecipeFragment"
+        android:label="fragment_single_recipe"
+        tools:layout="@layout/fragment_single_recipe" >
+        <argument
+            android:name="recipeId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_singleRecipeFragment_to_recipeContentFragment"
+            app:destination="@id/recipeContentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteRecipesFragment"
+        android:name="ru.netology.myrecipes.FavoriteRecipesFragment"
+        android:label="favorite_recipes_fragment"
+        tools:layout="@layout/favorite_recipes_fragment" >
+        <action
+            android:id="@+id/action_favoriteRecipesFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+        <action
+            android:id="@+id/action_favoriteRecipesFragment_to_singleRecipeFragment"
+            app:destination="@id/singleRecipeFragment" />
+        <action
+            android:id="@+id/action_favoriteRecipesFragment_to_recipeContentFragment"
+            app:destination="@id/recipeContentFragment" />
     </fragment>
 </navigation>

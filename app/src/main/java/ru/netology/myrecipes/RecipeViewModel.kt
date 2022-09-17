@@ -2,6 +2,7 @@ package ru.netology.myrecipes
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.myrecipes.bd.AppBd
 
@@ -13,13 +14,14 @@ class RecipeViewModel(
             context = application
         ).recipesActions
     )
+    var currentFavorites =  repo.getFavorites()
     val data by repo::data
     val currentRecipe = MutableLiveData<Recipe?>(null)
 //    val sharePost = SingleLiveEvent<String>()
     val navigateToEditScreenEvent = SingleLiveEvent<Array<String>?>()
 //    val playVideoEvent = SingleLiveEvent<String?>()
-//    val navigateToPostFragment = SingleLiveEvent<Long>()
-//    val navigateToFirstFragment = SingleLiveEvent<Unit>()
+    val navigateToPostFragment = SingleLiveEvent<Long>()
+    val navigateToFavoritesFragment = SingleLiveEvent<Unit>()
 var contentArray: Array<String> = emptyArray()
 
     fun onSaveClicked(array: Array<String>){
@@ -70,9 +72,15 @@ var contentArray: Array<String> = emptyArray()
 //
 //    }
 //
-//    override fun onPostClicked(id:Long){
-//        navigateToPostFragment.value = id
-//    }
+    fun getFavorites() {
+    currentFavorites = repo.getFavorites()
+    navigateToFavoritesFragment.call()
+    }
+
+
+    override fun onPostClicked(id:Long){
+        navigateToPostFragment.value = id
+    }
 
 
 

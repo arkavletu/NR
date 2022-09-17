@@ -23,9 +23,9 @@ internal class RecipesAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
 
-//        holder.itemView.setOnClickListener {
-//            actionListener.onPostClicked(getItem(position).id)
-//        }
+        holder.itemView.setOnClickListener {
+            actionListener.onPostClicked(getItem(position).id)
+        }
     }
 
 

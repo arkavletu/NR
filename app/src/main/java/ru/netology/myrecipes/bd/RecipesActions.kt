@@ -11,6 +11,9 @@ interface RecipesActions {
     @Query("SELECT * FROM recipes ORDER BY id DESC")
     fun getAll(): LiveData<List<RecipeEntity>>
 
+    @Query("SELECT * FROM recipes WHERE isFavorite = 1 ORDER BY id DESC")
+    fun getFavorites(): LiveData<List<RecipeEntity>>
+
     @Insert
     fun insert(recipe: RecipeEntity)
 

@@ -8,4 +8,8 @@
     <string name="category">Category</string>
     <string name="description_save" translatable="false">save</string>
     <string name="choose_country">Choose country</string>
+    <string name="all_recipes">All Recipes</string>
+    <string name="favorites">Favorites</string>
+    <string name="new_recipe">New Recipe</string>
+
 </resources>

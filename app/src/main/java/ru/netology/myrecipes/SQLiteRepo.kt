@@ -1,6 +1,8 @@
 package ru.netology.myrecipes
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
+import ru.netology.myrecipes.bd.RecipeEntity
 import ru.netology.myrecipes.bd.RecipesActions
 import ru.netology.myrecipes.bd.toEntity
 import ru.netology.myrecipes.bd.toModel
@@ -8,8 +10,8 @@ import ru.netology.myrecipes.bd.toModel
 class SQLiteRepo(
     val recipeActions: RecipesActions
 ): RecipeRepo {
-   // private var recipes = recipeActions.getAll()//checkNotNull(data.value) { "no nullable" }
-    override val data = recipeActions.getAll().map { entities ->
+     //lateinit var recipes: LiveData<List<Recipe>>
+    override var data = recipeActions.getAll().map { entities ->
         entities.map { it.toModel() }
     }
 
@@ -27,6 +29,15 @@ class SQLiteRepo(
         else recipeActions.updateContentById(recipe.id, recipe.author)
 
     }
+
+     override fun getFavorites(): LiveData<List<Recipe>> =
+         recipeActions.getFavorites().map{
+             it.map {
+                 it.toModel()
+             }
+         }
+
+
 
 
 //    private fun update(recipe: Recipe) {

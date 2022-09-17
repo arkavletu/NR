@@ -7,6 +7,6 @@ interface RecipeActionListener {
         fun onDeleteClicked(recipe: Recipe)
         fun onEditClicked(recipe: Recipe)
 //        fun onPlayClicked(post: Post)
-//        fun onPostClicked(id:Long)
+        fun onPostClicked(id:Long)
 
 }

@@ -6,16 +6,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.navigation.NavigationView
-import ru.netology.myrecipes.databinding.ListFragmentBinding
+import ru.netology.myrecipes.databinding.FavoriteRecipesFragmentBinding
 
-class ListFragment: Fragment() {
+
+class FavoriteRecipesFragment: Fragment() {
     val viewModel by viewModels<RecipeViewModel>(
         ownerProducer = ::requireParentFragment
     )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,15 +40,15 @@ class ListFragment: Fragment() {
 //            startActivity(shareIntent)
 //        }
 
-    setFragmentResultListener(RecipeContentFragment.REQUEST_KEY)
-    { requestKey, bundle ->
-        if (requestKey != RecipeContentFragment.REQUEST_KEY) return@setFragmentResultListener// edit here!!!
-        val newContent = bundle.getStringArray(
-            RecipeContentFragment.RESULT_KEY
-        ) ?: return@setFragmentResultListener
-        viewModel.contentArray = newContent
-        viewModel.onSaveClicked(newContent)
-    }
+        setFragmentResultListener(RecipeContentFragment.REQUEST_KEY)
+        { requestKey, bundle ->
+            if (requestKey != RecipeContentFragment.REQUEST_KEY) return@setFragmentResultListener// edit here!!!
+            val newContent = bundle.getStringArray(
+                RecipeContentFragment.RESULT_KEY
+            ) ?: return@setFragmentResultListener
+            viewModel.contentArray = newContent
+            viewModel.onSaveClicked(newContent)
+        }
 //    setFragmentResultListener(RecipeContentFragment.REQUEST_KEY2)
 //    { requestKey, bundle ->
 //        if (requestKey != RecipeContentFragment.REQUEST_KEY2) return@setFragmentResultListener// edit here!!!
@@ -61,7 +63,7 @@ class ListFragment: Fragment() {
 
         viewModel.navigateToEditScreenEvent.observe(this)
         { initialContent ->
-            val direction = ListFragmentDirections.actionListFragmentToRecipeContentFragment(
+            val direction = FavoriteRecipesFragmentDirections.actionFavoriteRecipesFragmentToRecipeContentFragment(
                 initialContent?.get(0), initialContent?.get(1), initialContent?.get(2)
             )
             findNavController().navigate(direction)
@@ -70,38 +72,32 @@ class ListFragment: Fragment() {
 
         viewModel.navigateToPostFragment.observe(this)
         { id ->
-            val direction = ListFragmentDirections.actionListFragmentToSingleRecipeFragment(id)
+            val direction = FavoriteRecipesFragmentDirections.actionFavoriteRecipesFragmentToSingleRecipeFragment(id)
             findNavController().navigate(direction)
 
-        }
-        viewModel.navigateToFavoritesFragment.observe(this){
-            val direction = ListFragmentDirections.actionListFragmentToFavoriteRecipesFragment()
-            findNavController().navigate(direction)
         }
 
 
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = ListFragmentBinding.inflate(layoutInflater, container, false).also {
+    ) = FavoriteRecipesFragmentBinding.inflate(layoutInflater, container, false).also {
         val adapter = RecipesAdapter(viewModel)
-        it.includedList.list.adapter = adapter
-        viewModel.data.observe(viewLifecycleOwner) { recipes ->
+        it.includedListFavorites.list.adapter = adapter
+        viewModel.currentFavorites.observe(viewLifecycleOwner) { recipes ->
             adapter.submitList(recipes)
         }
         it.bottomNavigation.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.all -> {
-
-                    false
+                    findNavController().navigate(FavoriteRecipesFragmentDirections.actionFavoriteRecipesFragmentToListFragment())
+                    true
                 }
                 R.id.favorites -> {
-                    viewModel.getFavorites()
-                    true
+                    false
                 }
                 R.id.newRecipe ->{
                     viewModel.onFabClicked()
@@ -113,11 +109,4 @@ class ListFragment: Fragment() {
 
 
     }.root
-
-
-    companion object {
-        const val TAG = "feedFragment"
-    }
 }
-
-

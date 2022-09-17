@@ -35,16 +35,16 @@
             android:checkable="true"
             app:icon="@drawable/options"
             />
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/favor"
-            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checkable="true"
-            app:icon="@drawable/favorite"
-            app:iconTint="@color/favorite_tint"
+<!--        <com.google.android.material.button.MaterialButton-->
+<!--            android:id="@+id/favor"-->
+<!--            style="@style/Widget.App.Button.OutlinedButton.IconOnly"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:checkable="true"-->
+<!--            app:icon="@drawable/favorite"-->
+<!--            app:iconTint="@color/favorite_tint"-->
 
-            />
+<!--            />-->
 
     </com.google.android.material.button.MaterialButtonToggleGroup>
     <androidx.appcompat.widget.AppCompatTextView
@@ -66,6 +66,25 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Автор" />
 
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/toggleFavor">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/favor"
+                    style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    app:icon="@drawable/favorite"
+                    app:iconTint="@color/favorite_tint"
+
+                    />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/header_barrier"
@@ -74,13 +93,13 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="author,name,category" />
 
-    <!--    <androidx.recyclerview.widget.RecyclerView-->
-    <!--        android:id="@+id/steps"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-    <!--        app:layout_constraintTop_toBottomOf= "@id/header_barrier"-->
-    <!--        tools:listitem="@layout/fragment_step"-->
-    <!--        android:gravity="bottom"/>-->
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/steps"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--            app:layout_constraintTop_toBottomOf= "@id/header_barrier"-->
+<!--            tools:listitem="@layout/fragment_step"-->
+<!--            android:gravity="bottom"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
