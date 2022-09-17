@@ -7,4 +7,7 @@
     <string name="name">Название</string>
     <string name="category">Категория</string>
     <string name="choose_country">Выбрать вид кухни</string>
+    <string name="all_recipes">Рецепты</string>
+    <string name="favorites">Избранное</string>
+    <string name="new_recipe">Создать</string>
 </resources>
