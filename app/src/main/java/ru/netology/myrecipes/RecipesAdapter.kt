@@ -2,6 +2,8 @@ package ru.netology.myrecipes
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -21,6 +23,10 @@ internal class RecipesAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+//            if(this.recipe.name.contains(name,ignoreCase = true)){
+//                this.bind(recipe)
+//            }
         holder.bind(getItem(position))
 
         holder.itemView.setOnClickListener {
@@ -86,6 +92,8 @@ internal class RecipesAdapter(
                 favor.isChecked = recipe.isFavorite
             }
         }
+
+
     }
 
     private object DiffSearcher : DiffUtil.ItemCallback<Recipe>() {
@@ -94,4 +102,6 @@ internal class RecipesAdapter(
         override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe) = oldItem == newItem
 
     }
+
+
 }

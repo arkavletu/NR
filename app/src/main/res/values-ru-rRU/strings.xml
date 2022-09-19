@@ -5,9 +5,12 @@
     <string name="menu_edit">Изменить</string>
     <string name="author">Автор</string>
     <string name="name">Название</string>
-    <string name="category">Категория</string>
+    <string name="category">Страна</string>
     <string name="choose_country">Выбрать вид кухни</string>
     <string name="all_recipes">Рецепты</string>
     <string name="favorites">Избранное</string>
     <string name="new_recipe">Создать</string>
+    <string name="your_name">Ваше имя</string>
+    <string name="title">Название рецепта</string>
+    <string name="save_me">Сохранить</string>
 </resources>

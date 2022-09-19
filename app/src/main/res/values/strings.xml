@@ -11,5 +11,8 @@
     <string name="all_recipes">All Recipes</string>
     <string name="favorites">Favorites</string>
     <string name="new_recipe">New Recipe</string>
+    <string name="your_name">Your name</string>
+    <string name="title" >Title</string>
+    <string name="save_me">Save me</string>
 
 </resources>

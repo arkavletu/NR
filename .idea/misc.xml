@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/drawable/favorite.xml" value="0.161" />
+        <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/drawable/ic_baseline_filter_alt_24.xml" value="0.1815" />
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.161" />
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/drawable/ic_baseline_place_48.xml" value="0.161" />
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.158" />
@@ -12,6 +13,7 @@
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/layout/activity_main.xml" value="0.17074275362318841" />
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/layout/favorite_recipes_fragment.xml" value="0.1644021739130435" />
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/layout/fragment_single_recipe.xml" value="0.1644021739130435" />
+        <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/layout/list_category.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/layout/list_fragment.xml" value="0.18" />
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/layout/list_of_recipes.xml" value="0.1644021739130435" />
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/layout/recipe.xml" value="0.21" />
@@ -20,6 +22,7 @@
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/menu/category_options.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/menu/menu_bottom_app_bar.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/menu/options.xml" value="0.20416666666666666" />
+        <entry key="..\:/AndroidSDK/MyRecipes/app/src/main/res/menu/top_toolbar_menu.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

@@ -15,6 +15,7 @@ class RecipeViewModel(
         ).recipesActions
     )
     var currentFavorites =  repo.getFavorites()
+    val filtered = MutableLiveData<List<Recipe?>>(null)
     val data by repo::data
     val currentRecipe = MutableLiveData<Recipe?>(null)
 //    val sharePost = SingleLiveEvent<String>()

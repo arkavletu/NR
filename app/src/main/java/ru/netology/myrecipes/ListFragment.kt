@@ -1,25 +1,26 @@
 package ru.netology.myrecipes
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
 import ru.netology.myrecipes.databinding.ListFragmentBinding
+import java.util.Locale.filter
 
-class ListFragment: Fragment() {
+class ListFragment : Fragment() {
     val viewModel by viewModels<RecipeViewModel>(
         ownerProducer = ::requireParentFragment
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 //        viewModel.playVideoEvent.observe(this)
 //        { video ->
 //            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(video))
@@ -38,24 +39,16 @@ class ListFragment: Fragment() {
 //            startActivity(shareIntent)
 //        }
 
-    setFragmentResultListener(RecipeContentFragment.REQUEST_KEY)
-    { requestKey, bundle ->
-        if (requestKey != RecipeContentFragment.REQUEST_KEY) return@setFragmentResultListener// edit here!!!
-        val newContent = bundle.getStringArray(
-            RecipeContentFragment.RESULT_KEY
-        ) ?: return@setFragmentResultListener
-        viewModel.contentArray = newContent
-        viewModel.onSaveClicked(newContent)
-    }
-//    setFragmentResultListener(RecipeContentFragment.REQUEST_KEY2)
-//    { requestKey, bundle ->
-//        if (requestKey != RecipeContentFragment.REQUEST_KEY2) return@setFragmentResultListener// edit here!!!
-//        val newContent2 = bundle.getString(
-//            RecipeContentFragment.RESULT_KEY2
-//        ) ?: return@setFragmentResultListener
-//        viewModel.contentArray[1] = newContent2
-//
-//    }
+        setFragmentResultListener(RecipeContentFragment.REQUEST_KEY)
+        { requestKey, bundle ->
+            if (requestKey != RecipeContentFragment.REQUEST_KEY) return@setFragmentResultListener// edit here!!!
+            val newContent = bundle.getStringArray(
+                RecipeContentFragment.RESULT_KEY
+            ) ?: return@setFragmentResultListener
+            viewModel.contentArray = newContent
+            viewModel.onSaveClicked(newContent)
+        }
+
 
 
 
@@ -74,7 +67,7 @@ class ListFragment: Fragment() {
             findNavController().navigate(direction)
 
         }
-        viewModel.navigateToFavoritesFragment.observe(this){
+        viewModel.navigateToFavoritesFragment.observe(this) {
             val direction = ListFragmentDirections.actionListFragmentToFavoriteRecipesFragment()
             findNavController().navigate(direction)
         }
@@ -93,27 +86,86 @@ class ListFragment: Fragment() {
         viewModel.data.observe(viewLifecycleOwner) { recipes ->
             adapter.submitList(recipes)
         }
-        it.bottomNavigation.setOnItemSelectedListener { item ->
-            when(item.itemId) {
-                R.id.all -> {
 
-                    false
-                }
-                R.id.favorites -> {
-                    viewModel.getFavorites()
-                    true
-                }
-                R.id.newRecipe ->{
-                    viewModel.onFabClicked()
-                    true
-                }
-                else -> false
+
+//        val searchView = it.includedList.searchView
+//        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener,
+//            android.widget.SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String): Boolean{
+//                if(query.isBlank()) return false
+//                adapter.submitList(viewModel.data.value?.filter { it.name.contains(query,true) })
+//                return true
+//            }
+//            override fun onQueryTextChange(newQuery: String): Boolean{
+//                if(newQuery.isBlank()) {
+//                    adapter.submitList(viewModel.data.value)
+//                    return false
+//                }
+//                adapter.submitList(viewModel.data.value?.filter { it.name.contains(newQuery,true) })
+//                return false
+//            }
+//        })
+//
+        val menuHost: MenuHost = requireActivity()
+        // val adapter = RecipesAdapter(viewModel)
+
+
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.top_toolbar_menu, menu)
+
+                val search = menu.findItem(R.id.search)
+                val searchView: SearchView = search.actionView as SearchView
+                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+                    android.widget.SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        if (query.isBlank()) return false
+                        adapter.submitList(viewModel.data.value?.filter {
+                            it.name.contains(
+                                query,
+                                true
+                            )
+                        })
+                        return true
+                    }
+
+                    override fun onQueryTextChange(newQuery: String): Boolean {
+                        if (newQuery.isBlank()) {
+                            adapter.submitList(viewModel.data.value)
+                            return false
+                        }
+                        adapter.submitList(viewModel.data.value?.filter {
+                            it.name.contains(
+                                newQuery,
+                                true
+                            )
+                        })
+                        return false
+                    }
+                })
             }
-        }
 
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                // Handle the menu selection
+                return when (menuItem.itemId) {
+                    R.id.search -> {
+                        true
+                    }
+                    R.id.filter -> {
+                        // loadTasks(true)
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
     }.root
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+    }
 
     companion object {
         const val TAG = "feedFragment"

@@ -1,11 +1,14 @@
 package ru.netology.myrecipes
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -90,23 +93,62 @@ class FavoriteRecipesFragment: Fragment() {
         viewModel.currentFavorites.observe(viewLifecycleOwner) { recipes ->
             adapter.submitList(recipes)
         }
-        it.bottomNavigation.setOnItemSelectedListener { item ->
-            when(item.itemId) {
-                R.id.all -> {
-                    findNavController().navigate(FavoriteRecipesFragmentDirections.actionFavoriteRecipesFragmentToListFragment())
-                    true
-                }
-                R.id.favorites -> {
-                    false
-                }
-                R.id.newRecipe ->{
-                    viewModel.onFabClicked()
-                    true
-                }
-                else -> false
+
+
+        val menuHost: MenuHost = requireActivity()
+        //val adapter = RecipesAdapter(viewModel)
+        //it.includedList.list.adapter = adapter
+
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.top_toolbar_menu, menu)
+                val search = menu.findItem(R.id.search)
+                val searchView: SearchView = search.actionView as SearchView
+                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+                    android.widget.SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        if (query.isBlank()) return false
+                        adapter.submitList(viewModel.data.value?.filter {
+                            it.name.contains(
+                                query,
+                                true
+                            )
+                        })
+                        return true
+                    }
+
+                    override fun onQueryTextChange(newQuery: String): Boolean {
+                        if (newQuery.isBlank()) {
+                            adapter.submitList(viewModel.data.value)
+                            return false
+                        }
+                        adapter.submitList(viewModel.data.value?.filter {
+                            it.name.contains(
+                                newQuery,
+                                true
+                            )
+                        })
+                        return false
+                    }
+                })
             }
-        }
 
-
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                // Handle the menu selection
+                return when (menuItem.itemId) {
+                    R.id.search -> {
+                        true
+                    }
+                    R.id.filter -> {
+                        // loadTasks(true)
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+    }
 }
