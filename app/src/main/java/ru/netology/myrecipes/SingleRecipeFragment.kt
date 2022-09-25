@@ -62,6 +62,7 @@ class SingleRecipeFragment : Fragment() {
 //            findNavController().popBackStack()
 //        }
         }
+
     }
 
         override fun onCreateView(
@@ -75,6 +76,8 @@ class SingleRecipeFragment : Fragment() {
             viewModel.data.observe(viewLifecycleOwner) { recipes ->
                 adapter.submitList(recipes.filter { it.id == id })
             }
+
+            //it.oneRecipe.list.item
         }.root
 
 

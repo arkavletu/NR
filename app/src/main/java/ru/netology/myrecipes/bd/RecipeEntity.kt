@@ -1,5 +1,6 @@
 package ru.netology.myrecipes.bd
 
+import androidx.annotation.Nullable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -11,8 +12,9 @@ class RecipeEntity (
     val id: Long,
     val author: String,
     val name: String,
-    val category: String,//enum
-    //val steps: MutableLiveData<List<Step>> = MutableLiveData(emptyList()),
+    val category: String,
     @ColumnInfo(name = "isFavorite")
-    var isFavorite: Boolean
+    var isFavorite: Boolean,
+    @ColumnInfo(name = "imageUrl")
+    val imageUrl: String
 )

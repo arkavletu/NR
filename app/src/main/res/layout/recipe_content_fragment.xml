@@ -12,23 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        app:layout_constraintTop_toBottomOf="@id/enterCategory"
+        app:layout_constraintTop_toBottomOf="@id/addStep"
         app:layout_constraintEnd_toEndOf="parent"
         android:contentDescription="@string/description_save"
         app:srcCompat="@drawable/save_48" />
 
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/ok"-->
-<!--        android:layout_gravity="bottom|end"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        android:contentDescription="@string/description_save"-->
-<!--        android:text="@string/save_me"-->
-<!--            android:visibility="visible"-->
-<!--        />-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/enterAuthor"
@@ -71,9 +59,53 @@
                 tools:ignore="LabelFor" />
 
         </com.google.android.material.textfield.TextInputLayout>
+       <androidx.appcompat.widget.AppCompatImageView
+           android:id="@+id/imagePreview"
+           android:layout_width="92dp"
+           android:layout_height="92dp"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toBottomOf="@id/enterCategory"
+           />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/pick"
+        android:text="+ Image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/enterCategory"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addStep"
+        android:text=" + Step "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/pick"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/enterUri"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint=""
+
+        app:layout_constraintTop_toBottomOf="@id/ok">
+
+    </androidx.appcompat.widget.AppCompatTextView>
+    <androidx.recyclerview.widget.RecyclerView
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+        android:id="@+id/listSteps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:visibility="visible"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintTop_toBottomOf="@id/enterUri"
+        tools:ignore="MissingConstraints"
+        tools:listitem="@layout/step" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 

@@ -2,10 +2,16 @@ package ru.netology.myrecipes
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.lang.System.exit
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,10 +26,24 @@ class MainActivity : AppCompatActivity() {
 
 
 
-//        navController.addOnDestinationChangedListener { _, destination, _ ->
-//            if(destination.id == R.id.recipeContentFragment) {
-//                findViewById<BottomNavigationView>(R.id.bottom_navigation).visibility = View.GONE
-//            }
-//        }
+
+
+
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.top_toolbar_menu,menu)
+        val search = menu?.findItem(R.id.search)
+        val searchView: SearchView = search?.actionView as SearchView
+        return true
+    }
+
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId){
+//            R.id.search -> true
+//            R.id.filter -> true
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
+
 }

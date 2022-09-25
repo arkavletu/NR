@@ -14,5 +14,5 @@
     <string name="your_name">Your name</string>
     <string name="title" >Title</string>
     <string name="save_me">Save me</string>
-
+    <string name="description">Description</string>
 </resources>

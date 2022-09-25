@@ -40,6 +40,9 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_recipeContentFragment_to_addStepFragment"
+            app:destination="@id/addStepFragment" />
     </fragment>
     <fragment
         android:id="@+id/singleRecipeFragment"
@@ -68,4 +71,9 @@
             android:id="@+id/action_favoriteRecipesFragment_to_recipeContentFragment"
             app:destination="@id/recipeContentFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/addStepFragment"
+        android:name="ru.netology.myrecipes.AddStepFragment"
+        android:label="add_step_fragment"
+        tools:layout="@layout/add_step_fragment" />
 </navigation>

@@ -5,7 +5,7 @@
     android:id="@+id/search"
     android:icon="@drawable/ic_baseline_search_24"
     android:title="search"
-    app:showAsAction="always"
+    app:showAsAction="ifRoom"
     android:iconTint="?attr/colorControlNormal"
     app:actionViewClass="androidx.appcompat.widget.SearchView"
     />

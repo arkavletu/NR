@@ -1,19 +1,25 @@
 package ru.netology.myrecipes
 
+
+import android.net.Uri.parse
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import ru.netology.myrecipes.ItemTouchHelper.TouchHelperAdapter
 import ru.netology.myrecipes.databinding.RecipeBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
-internal class RecipesAdapter(
+
+class RecipesAdapter(
 
     private val actionListener: RecipeActionListener
-) : ListAdapter<Recipe, RecipesAdapter.ViewHolder>(DiffSearcher) {
+) : ListAdapter<Recipe, RecipesAdapter.ViewHolder>(DiffSearcher), TouchHelperAdapter {
+    var data = ArrayList<Recipe>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -28,7 +34,7 @@ internal class RecipesAdapter(
 //                this.bind(recipe)
 //            }
         holder.bind(getItem(position))
-
+        data.add(getItem(position))
         holder.itemView.setOnClickListener {
             actionListener.onPostClicked(getItem(position).id)
         }
@@ -69,9 +75,9 @@ internal class RecipesAdapter(
             binding.favor.setOnClickListener {
                 listener.onLikeClicked(recipe)
             }
-//            binding.share.setOnClickListener {
-//                listener.onShareClicked(post)
-//            }
+            binding.more.setOnClickListener {
+                binding.listSteps.visibility = View.VISIBLE
+            }
 //            binding.video.setOnClickListener {
 //                listener.onPlayClicked(post)
 //            }
@@ -82,6 +88,7 @@ internal class RecipesAdapter(
         }
 
         fun bind(recipe: Recipe) {
+
             this.recipe = recipe
             with(binding)
             {
@@ -90,6 +97,14 @@ internal class RecipesAdapter(
                 category.text = recipe.category
                 options.setOnClickListener { popupMenu.show() }
                 favor.isChecked = recipe.isFavorite
+                if(recipe.imageUrl.isBlank()) {
+                    image.setImageResource(R.drawable.no_image)
+                } else image.setImageURI(parse(recipe.imageUrl))
+
+
+
+
+
             }
         }
 
@@ -102,6 +117,27 @@ internal class RecipesAdapter(
         override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe) = oldItem == newItem
 
     }
+
+    override fun onMove(fromPosition: Int, toPosition: Int) {
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                Collections.swap(data, i, i + 1)
+            }
+        } else {
+            for (i in fromPosition downTo toPosition + 1) {
+                Collections.swap(data, i, i - 1)
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition)
+
+    }
+
+    override fun onItemDismiss(position: Int) {
+        data.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+
 
 
 }

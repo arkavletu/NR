@@ -1,105 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/oneRecipe"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
     android:padding="@dimen/common_space">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_space"
-        android:layout_marginEnd="8dp"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Название рецепта" />
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/toggleGroup"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint"
 
-        >
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/options"
-            style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/common_space">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="194dp"
+            android:layout_marginBottom="@dimen/common_space"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checkable="true"
-            app:icon="@drawable/options"
-            />
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/favor"-->
-<!--            style="@style/Widget.App.Button.OutlinedButton.IconOnly"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:checkable="true"-->
-<!--            app:icon="@drawable/favorite"-->
-<!--            app:iconTint="@color/favorite_tint"-->
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-<!--            />-->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/options"
+                style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:checkable="true"
+                app:icon="@drawable/options" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
 
-    </com.google.android.material.button.MaterialButtonToggleGroup>
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/name"
-        app:layout_constraintTop_toBottomOf="@id/name"
-        tools:text = "Категория"/>
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/author"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_space"
-        android:singleLine="true"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/category"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Автор" />
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:layout_constraintStart_toStartOf="parent"
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/toggleFavor">
+            app:layout_constraintTop_toBottomOf="@id/image" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/favor"
-                    style="@style/Widget.App.Button.OutlinedButton.IconOnly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checkable="true"
-                    app:icon="@drawable/favorite"
-                    app:iconTint="@color/favorite_tint"
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?attr/textAppearanceBody2"
 
-                    />
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name" />
+
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="?attr/textAppearanceBody2"
+
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/author" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleGroupFavor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/more"
+                style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:checkable="true"
+                app:icon="@drawable/ic_baseline_arrow_drop_down_24"
+                app:iconTint="@color/favorite_tint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/category" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/favor"
+                style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:checkable="true"
+                app:icon="@drawable/favorite"
+                app:iconTint="@color/favorite_tint" />
 
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/header_barrier"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="author,name,category" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
 
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/steps"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0dp"-->
-<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--            app:layout_constraintTop_toBottomOf= "@id/header_barrier"-->
-<!--            tools:listitem="@layout/fragment_step"-->
-<!--            android:gravity="bottom"/>-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listSteps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:visibility="gone"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_constraintTop_toBottomOf="@id/category"
+            tools:ignore="MissingConstraints"
+            tools:listitem="@layout/step" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

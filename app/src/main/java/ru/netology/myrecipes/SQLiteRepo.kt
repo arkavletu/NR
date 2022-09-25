@@ -2,15 +2,11 @@ package ru.netology.myrecipes
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import ru.netology.myrecipes.bd.RecipeEntity
-import ru.netology.myrecipes.bd.RecipesActions
-import ru.netology.myrecipes.bd.toEntity
-import ru.netology.myrecipes.bd.toModel
+import ru.netology.myrecipes.bd.*
 
 class SQLiteRepo(
     val recipeActions: RecipesActions
 ): RecipeRepo {
-     //lateinit var recipes: LiveData<List<Recipe>>
     override var data = recipeActions.getAll().map { entities ->
         entities.map { it.toModel() }
     }
@@ -24,10 +20,10 @@ class SQLiteRepo(
 
     }
 
-    override fun save(recipe: Recipe) {
+    override fun save(recipe: Recipe): RecipeEntity {
         if (recipe.id == RecipeRepo.NEWID) recipeActions.insert(recipe.toEntity())
-        else recipeActions.updateContentById(recipe.id, recipe.author, recipe.name,recipe.category)
-
+        else recipeActions.updateContentById(recipe.id, recipe.author, recipe.name,recipe.category,recipe.imageUrl)
+        return recipe.toEntity()
     }
 
      override fun getFavorites(): LiveData<List<Recipe>> =
@@ -38,7 +34,12 @@ class SQLiteRepo(
          }
 
 
-
+     override fun getFiltered(category:String?): LiveData<List<Recipe?>> =
+         recipeActions.selectOneCategory(category).map{
+             it.map {
+                 it.toModel()
+             }
+         }
 
 //    private fun update(recipe: Recipe) {
 //        recipes = recipes.map {
@@ -51,7 +52,9 @@ class SQLiteRepo(
 //
 //    }
 
-
+    override fun insertStep(step: Step){
+        recipeActions.insertStep(step.toStepEntity())
+    }
 
 
 }

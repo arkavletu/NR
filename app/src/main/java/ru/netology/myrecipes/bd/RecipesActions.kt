@@ -17,11 +17,17 @@ interface RecipesActions {
     @Insert
     fun insert(recipe: RecipeEntity)
 
-    @Query("UPDATE recipes SET author = :author, name = :name, category = :category WHERE id = :id")// и остальные поля
-    fun updateContentById(id: Long, author: String, name: String, category: String)
+    @Insert
+    fun insertStep(step: StepEntity)
 
-//    fun save(recipe: RecipeEntity) =
-//        if (recipe.id == 0L) insert(recipe) else updateContentById(recipe.id, recipe.author)
+    @Query("SELECT * FROM steps WHERE recipeId = :id")//order by?
+    fun getStepsForRecipe(id: Long): LiveData<List<StepEntity>>
+
+    @Query("UPDATE recipes SET author = :author, name = :name, category = :category, imageUrl = :imageUrl WHERE id = :id")
+    fun updateContentById(id: Long, author: String, name: String, category: String, imageUrl: String?)
+
+//    fun save(recipe: RecipeEntity): RecipeEntity =
+//        if (recipe.id == 0L) insert(recipe) else updateContentById(recipe.id, recipe.author, recipe.name: String, recipe.category: String, recipe.imageUrl: String?)
 
     @Query("""
         UPDATE recipes SET
@@ -33,9 +39,11 @@ interface RecipesActions {
     @Query("DELETE FROM recipes WHERE id = :id")
     fun removeById(id: Long)
 
+    @Query("SELECT*FROM recipes WHERE category = :category")
+    fun selectOneCategory(category: String?):LiveData<List<RecipeEntity>>
 
-//    fun getAll(): List<Recipe>
-//    fun save(recipe: Recipe): Recipe
-//    fun addToFavorites(id:Long)
-//    fun remove(id:Long)
+
+
+
+
 }

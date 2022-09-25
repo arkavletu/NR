@@ -1,43 +1,31 @@
 package ru.netology.myrecipes
 
 import android.os.Bundle
-import android.view.*
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
+import androidx.customview.widget.ViewDragHelper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.DOWN
+import androidx.recyclerview.widget.ItemTouchHelper.UP
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import ru.netology.myrecipes.ItemTouchHelper.Callback
 import ru.netology.myrecipes.databinding.ListFragmentBinding
-import java.util.Locale.filter
 
 class ListFragment : Fragment() {
     val viewModel by viewModels<RecipeViewModel>(
         ownerProducer = ::requireParentFragment
     )
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        viewModel.playVideoEvent.observe(this)
-//        { video ->
-//            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(video))
-//            val playIntent = Intent.createChooser(intent, "Choose app")
-//            startActivity(playIntent)
-//        }
-//        viewModel.sharePost.observe(this)
-//        { postContent ->
-//            val intent = Intent().apply {
-//                action = Intent.ACTION_SEND
-//                putExtra(Intent.EXTRA_TEXT, postContent)
-//                type = "text/plain"
-//            }
-//            val shareIntent =
-//                Intent.createChooser(intent, getString(R.string.chooser_share_post))
-//            startActivity(shareIntent)
-//        }
 
         setFragmentResultListener(RecipeContentFragment.REQUEST_KEY)
         { requestKey, bundle ->
@@ -73,6 +61,7 @@ class ListFragment : Fragment() {
         }
 
 
+
     }
 
 
@@ -87,89 +76,62 @@ class ListFragment : Fragment() {
             adapter.submitList(recipes)
         }
 
-
-//        val searchView = it.includedList.searchView
-//        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener,
-//            android.widget.SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(query: String): Boolean{
-//                if(query.isBlank()) return false
-//                adapter.submitList(viewModel.data.value?.filter { it.name.contains(query,true) })
-//                return true
-//            }
-//            override fun onQueryTextChange(newQuery: String): Boolean{
-//                if(newQuery.isBlank()) {
-//                    adapter.submitList(viewModel.data.value)
-//                    return false
-//                }
-//                adapter.submitList(viewModel.data.value?.filter { it.name.contains(newQuery,true) })
-//                return false
-//            }
-//        })
-//
-        val menuHost: MenuHost = requireActivity()
-        // val adapter = RecipesAdapter(viewModel)
-
-
-        menuHost.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.top_toolbar_menu, menu)
-
-                val search = menu.findItem(R.id.search)
-                val searchView: SearchView = search.actionView as SearchView
-                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-                    android.widget.SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(query: String): Boolean {
-                        if (query.isBlank()) return false
-                        adapter.submitList(viewModel.data.value?.filter {
-                            it.name.contains(
-                                query,
-                                true
-                            )
-                        })
-                        return true
-                    }
-
-                    override fun onQueryTextChange(newQuery: String): Boolean {
-                        if (newQuery.isBlank()) {
-                            adapter.submitList(viewModel.data.value)
-                            return false
-                        }
-                        adapter.submitList(viewModel.data.value?.filter {
-                            it.name.contains(
-                                newQuery,
-                                true
-                            )
-                        })
-                        return false
-                    }
-                })
+        val searchView = it.includedList.search
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener,
+            android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean{
+                if(query.isBlank()) return false
+                adapter.submitList(viewModel.data.value?.filter { it.name.contains(query,true) })
+                return true
             }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                // Handle the menu selection
-                return when (menuItem.itemId) {
-                    R.id.search -> {
-                        true
-                    }
-                    R.id.filter -> {
-                        // loadTasks(true)
-                        true
-                    }
-                    else -> false
+            override fun onQueryTextChange(newQuery: String): Boolean{
+                if(newQuery.isBlank()) {
+                    adapter.submitList(viewModel.data.value)
+                    return false
                 }
+                adapter.submitList(viewModel.data.value?.filter { it.name.contains(newQuery,true) })
+                return false
             }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-
+        })
+        it.includedList.filterIcon.setOnClickListener {
+            val singleItems = arrayOf("All")+Categories.array
+            var checkedItem = 0
+            MaterialAlertDialogBuilder(requireActivity())
+                .setTitle(resources.getString(R.string.category))
+                .setSingleChoiceItems(singleItems, checkedItem) { dialog, which ->
+                    checkedItem = which
+                }.setPositiveButton(resources.getString(R.string.save_me)) { dialog, which ->
+                    if(checkedItem == 0) adapter.submitList(viewModel.data.value)
+                    else adapter.submitList(viewModel.data.value?.filter{it.category == singleItems[checkedItem]})
+                }.show()
+        }
+        val callback:ItemTouchHelper.Callback = Callback(adapter)
+        val touchHelper = ItemTouchHelper(callback)
+        touchHelper.attachToRecyclerView(it.includedList.list)
     }.root
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//    private inner class ViewDragHelperCallback : ViewDragHelper.Callback() {
+//
+//        override fun onViewCaptured(capturedChild: View, activePointerId: Int) {
+//            if (capturedChild is MaterialCardView) {
+//                (view as MaterialCardView).setDragged(true)
+//            }
+//        }
+//
+//        override fun onViewReleased(releaseChild: View, xVel: Float, yVel: Float) {
+//            if (releaseChild is MaterialCardView) {
+//                (view as MaterialCardView).setDragged(false)
+//            }
+//        }
+//
+//        override fun tryCaptureView(child: View, pointerId: Int): Boolean {
+//            return true
+//        }
+//    }
 
-    }
 
-    companion object {
-        const val TAG = "feedFragment"
-    }
+
 }
 
 

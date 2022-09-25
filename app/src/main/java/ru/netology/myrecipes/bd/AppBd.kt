@@ -6,8 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [RecipeEntity::class],
-    version = 1
+    entities = [RecipeEntity::class,StepEntity::class],
+
+    version = 2
 )
 abstract class AppBd: RoomDatabase() {
     abstract val recipesActions: RecipesActions
