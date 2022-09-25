@@ -17,28 +17,11 @@ class SingleRecipeFragment : Fragment() {
     val viewModel by viewModels<RecipeViewModel>(
         ownerProducer = ::requireParentFragment
     )
-    //val singlePostVM by viewModels<SinglePostViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        viewModel.playVideoEvent.observe(this)
-//        { video ->
-//            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(video))
-//            val playIntent = Intent.createChooser(intent, "Choose app")
-//            startActivity(playIntent)
-//        }
-//        viewModel.sharePost.observe(this)
-//        { postContent ->
-//            val intent = Intent().apply {
-//                action = Intent.ACTION_SEND
-//                putExtra(Intent.EXTRA_TEXT, postContent)
-//                type = "text/plain"
-//            }
-//            val shareIntent =
-//                Intent.createChooser(intent, getString(R.string.chooser_share_post))
-//            startActivity(shareIntent)
-//        }
+
 
         setFragmentResultListener(RecipeContentFragment.REQUEST_KEY)
         { requestKey, bundle ->
@@ -48,7 +31,7 @@ class SingleRecipeFragment : Fragment() {
             ) ?: return@setFragmentResultListener
             viewModel.contentArray = newContent
             viewModel.onSaveClicked(newContent)
-
+        }
             viewModel.navigateToEditScreenEvent.observe(this)
             { initialContent ->
                 val direction =
@@ -58,10 +41,7 @@ class SingleRecipeFragment : Fragment() {
                 findNavController().navigate(direction)
             }
 
-//        viewModel.navigateToFirstFragment.observe(this){
-//            findNavController().popBackStack()
-//        }
-        }
+
 
     }
 
@@ -77,7 +57,14 @@ class SingleRecipeFragment : Fragment() {
                 adapter.submitList(recipes.filter { it.id == id })
             }
 
-            //it.oneRecipe.list.item
+            val stepsAdapter = StepsAdapter(viewModel)
+            it.listSteps.adapter = stepsAdapter
+            val steps = viewModel.getStepsForRecipe(id).value
+            stepsAdapter.submitList(steps)
+
+
+
+
         }.root
 
 

@@ -10,6 +10,15 @@ class SQLiteRepo(
     override var data = recipeActions.getAll().map { entities ->
         entities.map { it.toModel() }
     }
+    override val steps = recipeActions.getAllSteps().map { entities ->
+        entities.map { it.toStepModel() }
+    }
+
+    override fun getStepsForRecipe(id: Long): LiveData<List<Step>> =
+        recipeActions.getStepsForRecipe(id).map { entities ->
+            entities.map { it.toStepModel() }
+        }
+
 
     override fun like(rId: Long) {
         recipeActions.addToFavorites(rId)
@@ -17,7 +26,7 @@ class SQLiteRepo(
 
     override fun delete(rId: Long) {
         recipeActions.removeById(rId)
-
+        recipeActions.removeByRecId(rId)
     }
 
     override fun save(recipe: Recipe): RecipeEntity {
@@ -41,19 +50,12 @@ class SQLiteRepo(
              }
          }
 
-//    private fun update(recipe: Recipe) {
-//        recipes = recipes.map {
-//            if (it.id == recipe.id) recipe else it
-//        }
-//    }
-//
-//    private fun insert(recipe: Recipe) {
-//        recipes = listOf(recipe.copy()) + recipes
-//
-//    }
-
     override fun insertStep(step: Step){
         recipeActions.insertStep(step.toStepEntity())
+    }
+
+    override fun updateStep(id: Long) {
+        recipeActions.updateStepRecipeId(id)
     }
 
 

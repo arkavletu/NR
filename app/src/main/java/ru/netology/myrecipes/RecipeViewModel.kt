@@ -4,6 +4,7 @@ import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.*
 import ru.netology.myrecipes.bd.AppBd
+import ru.netology.myrecipes.bd.toModel
 
 class RecipeViewModel(
     application: Application
@@ -14,17 +15,18 @@ class RecipeViewModel(
         ).recipesActions
     )
     var currentFavorites = repo.getFavorites()
-    var newUri: Uri? = null
+    //var newUri: Uri? = null
     val data by repo::data
-    val currentRecipe = MutableLiveData<Recipe?>(null)
+    val steps by repo::steps
+    var currentRecipe = MutableLiveData<Recipe?>(null)
     val navigateToEditScreenEvent = SingleLiveEvent<Array<String>?>()
     val ImageEvent = SingleLiveEvent<Unit>()
     val navigateToPostFragment = SingleLiveEvent<Long>()
     val navigateToFavoritesFragment = SingleLiveEvent<Unit>()
     var contentArray: Array<String> = emptyArray()
     val addStepEvent = SingleLiveEvent<Unit>()
-    val stepsMap = MutableLiveData<Map<Long,List<Step>>>()
-    var currentSteps = MutableLiveData<MutableList<Step?>>(null)
+   // val stepsMap = MutableLiveData<Map<Long,List<Step>>>()
+    //var currentSteps = MutableLiveData<MutableList<Step?>>(null)
 
     fun onSaveClicked(array: Array<String>) {
         if (array[0].isBlank() || array[1].isBlank() || array[2].isBlank()) return
@@ -34,6 +36,7 @@ class RecipeViewModel(
             name = array[1],
             category = array[2],
             imageUrl = array[3]
+
         ) ?: Recipe(
             id = RecipeRepo.NEWID,
             author = array[0],
@@ -41,14 +44,10 @@ class RecipeViewModel(
             category = array[2],
             imageUrl = array[3]
         )
-        repo.save(recipe)
-        currentSteps.value?.apply {
-            this.forEach {
-            it?.recipeId = repo.save(recipe).id//or update
-                if (it != null) {
-                    repo.insertStep(it)
-                }
-        }
+        currentRecipe.value = repo.save(recipe).toModel()
+        repo.steps.value?.forEach {
+            if (it.recipeId!=0L) return@forEach
+            currentRecipe.value?.id?.let { it1 -> repo.updateStep(it1) }
         }
 
         currentRecipe.value = null
@@ -83,6 +82,7 @@ class RecipeViewModel(
 
     override fun onPostClicked(id: Long) {
         navigateToPostFragment.value = id
+
     }
 
     fun getFiltered(category: String) = repo.getFiltered(category)
@@ -91,11 +91,13 @@ class RecipeViewModel(
         addStepEvent.call()
     }
 
+
     fun saveStep(text:String, uri:String?){
-       val step = Step(text = text, imageUrl = "uri")
+       val step = Step(text = text, imageUrl = "uri", recipeId = currentRecipe.value?.id?:0)
         repo.insertStep(step)
-        currentSteps.value?.plusAssign(step)
     }
+
+    override fun getStepsForRecipe(id: Long) = repo.getStepsForRecipe(id)
 
 
 }

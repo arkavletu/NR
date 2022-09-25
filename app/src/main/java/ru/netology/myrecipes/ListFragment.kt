@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.allViews
+import androidx.core.view.children
 import androidx.customview.widget.ViewDragHelper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -29,16 +31,13 @@ class ListFragment : Fragment() {
 
         setFragmentResultListener(RecipeContentFragment.REQUEST_KEY)
         { requestKey, bundle ->
-            if (requestKey != RecipeContentFragment.REQUEST_KEY) return@setFragmentResultListener// edit here!!!
+            if (requestKey != RecipeContentFragment.REQUEST_KEY) return@setFragmentResultListener
             val newContent = bundle.getStringArray(
                 RecipeContentFragment.RESULT_KEY
             ) ?: return@setFragmentResultListener
             viewModel.contentArray = newContent
             viewModel.onSaveClicked(newContent)
         }
-
-
-
 
         viewModel.navigateToEditScreenEvent.observe(this)
         { initialContent ->
@@ -61,7 +60,6 @@ class ListFragment : Fragment() {
         }
 
 
-
     }
 
 
@@ -76,61 +74,46 @@ class ListFragment : Fragment() {
             adapter.submitList(recipes)
         }
 
+
         val searchView = it.includedList.search
-        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener,
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             android.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean{
-                if(query.isBlank()) return false
-                adapter.submitList(viewModel.data.value?.filter { it.name.contains(query,true) })
+            override fun onQueryTextSubmit(query: String): Boolean {
+                if (query.isBlank()) return false
+                adapter.submitList(viewModel.data.value?.filter { it.name.contains(query, true) })
                 return true
             }
-            override fun onQueryTextChange(newQuery: String): Boolean{
-                if(newQuery.isBlank()) {
+
+            override fun onQueryTextChange(newQuery: String): Boolean {
+                if (newQuery.isBlank()) {
                     adapter.submitList(viewModel.data.value)
                     return false
                 }
-                adapter.submitList(viewModel.data.value?.filter { it.name.contains(newQuery,true) })
+                adapter.submitList(viewModel.data.value?.filter {
+                    it.name.contains(
+                        newQuery,
+                        true
+                    )
+                })
                 return false
             }
         })
         it.includedList.filterIcon.setOnClickListener {
-            val singleItems = arrayOf("All")+Categories.array
+            val singleItems = arrayOf("All") + Categories.array
             var checkedItem = 0
             MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(resources.getString(R.string.category))
                 .setSingleChoiceItems(singleItems, checkedItem) { dialog, which ->
                     checkedItem = which
                 }.setPositiveButton(resources.getString(R.string.save_me)) { dialog, which ->
-                    if(checkedItem == 0) adapter.submitList(viewModel.data.value)
-                    else adapter.submitList(viewModel.data.value?.filter{it.category == singleItems[checkedItem]})
+                    if (checkedItem == 0) adapter.submitList(viewModel.data.value)
+                    else adapter.submitList(viewModel.data.value?.filter { it.category == singleItems[checkedItem] })
                 }.show()
         }
-        val callback:ItemTouchHelper.Callback = Callback(adapter)
+        val callback: ItemTouchHelper.Callback = Callback(adapter)
         val touchHelper = ItemTouchHelper(callback)
         touchHelper.attachToRecyclerView(it.includedList.list)
     }.root
-
-
-//    private inner class ViewDragHelperCallback : ViewDragHelper.Callback() {
-//
-//        override fun onViewCaptured(capturedChild: View, activePointerId: Int) {
-//            if (capturedChild is MaterialCardView) {
-//                (view as MaterialCardView).setDragged(true)
-//            }
-//        }
-//
-//        override fun onViewReleased(releaseChild: View, xVel: Float, yVel: Float) {
-//            if (releaseChild is MaterialCardView) {
-//                (view as MaterialCardView).setDragged(false)
-//            }
-//        }
-//
-//        override fun tryCaptureView(child: View, pointerId: Int): Boolean {
-//            return true
-//        }
-//    }
-
-
 
 }
 

@@ -11,6 +11,9 @@ interface RecipesActions {
     @Query("SELECT * FROM recipes ORDER BY id DESC")
     fun getAll(): LiveData<List<RecipeEntity>>
 
+    @Query("SELECT * FROM steps ORDER BY id DESC")
+    fun getAllSteps(): LiveData<List<StepEntity>>
+
     @Query("SELECT * FROM recipes WHERE isFavorite = 1 ORDER BY id DESC")
     fun getFavorites(): LiveData<List<RecipeEntity>>
 
@@ -26,6 +29,9 @@ interface RecipesActions {
     @Query("UPDATE recipes SET author = :author, name = :name, category = :category, imageUrl = :imageUrl WHERE id = :id")
     fun updateContentById(id: Long, author: String, name: String, category: String, imageUrl: String?)
 
+    @Query("UPDATE steps SET recipeId = :id WHERE id = 0")
+    fun updateStepRecipeId(id: Long)
+
 //    fun save(recipe: RecipeEntity): RecipeEntity =
 //        if (recipe.id == 0L) insert(recipe) else updateContentById(recipe.id, recipe.author, recipe.name: String, recipe.category: String, recipe.imageUrl: String?)
 
@@ -38,6 +44,9 @@ interface RecipesActions {
 
     @Query("DELETE FROM recipes WHERE id = :id")
     fun removeById(id: Long)
+
+    @Query("DELETE FROM steps WHERE recipeId = :id")
+    fun removeByRecId(id: Long)
 
     @Query("SELECT*FROM recipes WHERE category = :category")
     fun selectOneCategory(category: String?):LiveData<List<RecipeEntity>>

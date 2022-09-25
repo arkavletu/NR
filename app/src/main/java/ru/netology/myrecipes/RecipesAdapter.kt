@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,7 @@ class RecipesAdapter(
     private val actionListener: RecipeActionListener
 ) : ListAdapter<Recipe, RecipesAdapter.ViewHolder>(DiffSearcher), TouchHelperAdapter {
     var data = ArrayList<Recipe>()
+    //var steps: List<Step> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -30,9 +32,6 @@ class RecipesAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-//            if(this.recipe.name.contains(name,ignoreCase = true)){
-//                this.bind(recipe)
-//            }
         holder.bind(getItem(position))
         data.add(getItem(position))
         holder.itemView.setOnClickListener {
@@ -47,7 +46,6 @@ class RecipesAdapter(
     ) :
         RecyclerView.ViewHolder(binding.root) {
         private lateinit var recipe: Recipe
-
 
         private val popupMenu by lazy {
             PopupMenu(itemView.context, binding.options).apply {
@@ -75,20 +73,14 @@ class RecipesAdapter(
             binding.favor.setOnClickListener {
                 listener.onLikeClicked(recipe)
             }
-            binding.more.setOnClickListener {
-                binding.listSteps.visibility = View.VISIBLE
-            }
-//            binding.video.setOnClickListener {
-//                listener.onPlayClicked(post)
+//            binding.more.setOnClickListener {
+////думала разворачивать карточку вместо отдельного экрана - не работает пока
+//                binding.listSteps.visibility = View.VISIBLE
 //            }
-//            binding.play.setOnClickListener {
-//                listener.onPlayClicked(post)
-//            }
-//
+
         }
 
         fun bind(recipe: Recipe) {
-
             this.recipe = recipe
             with(binding)
             {
@@ -100,15 +92,11 @@ class RecipesAdapter(
                 if(recipe.imageUrl.isBlank()) {
                     image.setImageResource(R.drawable.no_image)
                 } else image.setImageURI(parse(recipe.imageUrl))
-
-
-
-
-
+//                val stepsAdapter = StepsAdapter(actionListener)//это, наверное, не здесь надо делать
+//                listSteps.adapter = stepsAdapter
+//                stepsAdapter.submitList(recipe.steps)
             }
         }
-
-
     }
 
     private object DiffSearcher : DiffUtil.ItemCallback<Recipe>() {

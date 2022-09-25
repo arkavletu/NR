@@ -109,7 +109,6 @@ class FavoriteRecipesFragment : Fragment() {
                     adapter.submitList(viewModel.currentFavorites.value?.filter {
                         it.category == singleItems[checkedItem] && it.isFavorite == true
                     })
-                    // Respond to positive button press
                 }.setSingleChoiceItems(singleItems, checkedItem) { dialog, which ->
                     checkedItem = which
                 }
