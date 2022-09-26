@@ -25,7 +25,7 @@ class StepsAdapter(
     override fun onBindViewHolder(holder: StepsAdapter.ViewHolder, position: Int) {
 
         holder.bind(getItem(position))
-
+        data.add(getItem(position))
 
     }
 

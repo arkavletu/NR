@@ -21,7 +21,6 @@ class RecipesAdapter(
     private val actionListener: RecipeActionListener
 ) : ListAdapter<Recipe, RecipesAdapter.ViewHolder>(DiffSearcher), TouchHelperAdapter {
     var data = ArrayList<Recipe>()
-    //var steps: List<Step> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)

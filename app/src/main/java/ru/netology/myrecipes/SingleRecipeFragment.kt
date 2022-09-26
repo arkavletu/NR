@@ -8,6 +8,8 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.ItemTouchHelper
+import ru.netology.myrecipes.ItemTouchHelper.Callback
 import ru.netology.myrecipes.databinding.FragmentSingleRecipeBinding
 
 
@@ -64,7 +66,7 @@ class SingleRecipeFragment : Fragment() {
             }
 
 
-           // viewModel.getRecipeAndSteps(id).observe(viewLifecycleOwner){}
+
 
 
 

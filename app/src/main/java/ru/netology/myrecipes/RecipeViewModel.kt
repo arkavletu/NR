@@ -46,8 +46,8 @@ class RecipeViewModel(
         )
         currentRecipe.value = repo.save(recipe).toModel()
         repo.steps.value?.forEach {
-            if (it.recipeId!=0L) return@forEach
-            currentRecipe.value?.id?.let { it1 -> repo.updateStep(it1) }
+            if (it.recipeId != 0L && it.id != 0L) return@forEach
+            repo.updateStep(currentRecipe.value?.id?:return@forEach)
         }
 
         currentRecipe.value = null
@@ -96,6 +96,7 @@ class RecipeViewModel(
 
     fun saveStep(text:String, uri:String?){
        val step = Step(text = text, imageUrl = "uri", recipeId = currentRecipe.value?.id?:0)
+
         repo.insertStep(step)
     }
 

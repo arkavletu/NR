@@ -74,11 +74,12 @@ class RecipeContentFragment : Fragment() {
 
         val stepAdapter = StepsAdapter(viewModel)
         binding.listSteps.adapter = stepAdapter
-        val steps = viewModel.getStepsForRecipe(viewModel.currentRecipe.value?.id?:0L).value
-        stepAdapter.submitList(steps)
-//        viewModel.steps.observe(viewLifecycleOwner) { steps ->
-//            stepAdapter.submitList(steps.filter { it.recipeId == viewModel.currentRecipe.value?.id })
-//        }
+
+       viewModel.getStepsForRecipe(viewModel.currentRecipe.value?.id?:0L).observe(viewLifecycleOwner){steps ->
+           stepAdapter.submitList(steps)
+       }
+
+
 
         binding.enterAuthor.editText?.setText(args.author)
         binding.enterName.editText?.setText(args.name)
@@ -120,9 +121,9 @@ class RecipeContentFragment : Fragment() {
         binding.addStep.setOnClickListener {
             viewModel.addStep()
         }
-//        val callback: ItemTouchHelper.Callback = Callback(stepAdapter)
-//        val touchHelper = ItemTouchHelper(callback)
-//        touchHelper.attachToRecyclerView(binding.listSteps)
+        val callback: ItemTouchHelper.Callback = Callback(stepAdapter)
+        val touchHelper = ItemTouchHelper(callback)
+        touchHelper.attachToRecyclerView(binding.listSteps)
     }.root
 
 
