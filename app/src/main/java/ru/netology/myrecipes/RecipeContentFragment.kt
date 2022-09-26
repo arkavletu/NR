@@ -74,9 +74,11 @@ class RecipeContentFragment : Fragment() {
 
         val stepAdapter = StepsAdapter(viewModel)
         binding.listSteps.adapter = stepAdapter
-        viewModel.steps.observe(viewLifecycleOwner) { steps ->
-            stepAdapter.submitList(steps.filter { it.recipeId == viewModel.currentRecipe.value?.id })
-        }
+        val steps = viewModel.getStepsForRecipe(viewModel.currentRecipe.value?.id?:0L).value
+        stepAdapter.submitList(steps)
+//        viewModel.steps.observe(viewLifecycleOwner) { steps ->
+//            stepAdapter.submitList(steps.filter { it.recipeId == viewModel.currentRecipe.value?.id })
+//        }
 
         binding.enterAuthor.editText?.setText(args.author)
         binding.enterName.editText?.setText(args.name)
