@@ -43,13 +43,18 @@ class SQLiteRepo(
          }
 
 
-     override fun getFiltered(category:String?): LiveData<List<Recipe?>> =
+     override fun getFiltered(category:String): LiveData<List<Recipe?>> =
          recipeActions.selectOneCategory(category).map{
              it.map {
                  it.toModel()
              }
          }
-
+    override fun getFilteredFavorites(category:String): LiveData<List<Recipe?>> =
+        recipeActions.selectOneCategoryFromFavorites(category).map{
+            it.map {
+                it.toModel()
+            }
+        }
     override fun insertStep(step: Step){
         recipeActions.insertStep(step.toStepEntity())
     }
@@ -57,6 +62,9 @@ class SQLiteRepo(
     override fun updateStep(id: Long) {
         recipeActions.updateStepRecipeId(id)
     }
+
+//    override fun getRecipeAndSteps(id: Long): LiveData<List<RecipeAndSteps>> =
+//        recipeActions.getRecipesAndSteps(id)
 
 
 }

@@ -76,15 +76,8 @@ class FavoriteRecipesFragment : Fragment() {
             android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 if (query.isBlank()) return false
-                adapter.submitList(viewModel.currentFavorites.value?.filter {
-                    it.name.contains(
-                        query,
-                        true
-                    )
-                })
                 return true
             }
-
             override fun onQueryTextChange(newQuery: String): Boolean {
                 if (newQuery.isBlank()) {
                     adapter.submitList(viewModel.currentFavorites.value)
@@ -104,12 +97,12 @@ class FavoriteRecipesFragment : Fragment() {
             var checkedItem = 0
             MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(resources.getString(R.string.category))
-                .setPositiveButton(resources.getString(R.string.save_me)) { dialog, which ->
+                .setPositiveButton(resources.getString(R.string.save_me)) { _, _ ->
                     if (checkedItem == 0) adapter.submitList(viewModel.currentFavorites.value)
-                    adapter.submitList(viewModel.currentFavorites.value?.filter {
-                        it.category == singleItems[checkedItem] && it.isFavorite == true
-                    })
-                }.setSingleChoiceItems(singleItems, checkedItem) { dialog, which ->
+                    viewModel.getFilteredFavorites(singleItems[checkedItem]).observe(viewLifecycleOwner){filtered ->
+                        adapter.submitList(filtered)
+                    }
+                }.setSingleChoiceItems(singleItems, checkedItem) { _, which ->
                     checkedItem = which
                 }
                 .show()

@@ -27,7 +27,7 @@ class RecipeViewModel(
     val addStepEvent = SingleLiveEvent<Unit>()
    // val stepsMap = MutableLiveData<Map<Long,List<Step>>>()
     //var currentSteps = MutableLiveData<MutableList<Step?>>(null)
-
+    //fun getRecipeAndSteps(id: Long) = repo.getRecipeAndSteps(id)
     fun onSaveClicked(array: Array<String>) {
         if (array[0].isBlank() || array[1].isBlank() || array[2].isBlank()) return
 
@@ -86,6 +86,8 @@ class RecipeViewModel(
     }
 
     fun getFiltered(category: String) = repo.getFiltered(category)
+    fun getFilteredFavorites(category: String) = repo.getFilteredFavorites(category)
+
 
     fun addStep(){
         addStepEvent.call()

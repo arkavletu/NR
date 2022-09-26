@@ -59,8 +59,12 @@ class SingleRecipeFragment : Fragment() {
 
             val stepsAdapter = StepsAdapter(viewModel)
             it.listSteps.adapter = stepsAdapter
-            val steps = viewModel.getStepsForRecipe(id).value
-            stepsAdapter.submitList(steps)
+            viewModel.getStepsForRecipe(id).observe(viewLifecycleOwner){steps->
+                stepsAdapter.submitList(steps)
+            }
+
+
+           // viewModel.getRecipeAndSteps(id).observe(viewLifecycleOwner){}
 
 
 

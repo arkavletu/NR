@@ -4,9 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 
 @Dao
 interface RecipesActions {
+
+//    @Transaction
+//    @Query("SELECT * FROM recipes WHERE id = :id")
+//    fun getRecipesAndSteps(id: Long): LiveData<List<RecipeAndSteps>>
 
     @Query("SELECT * FROM recipes ORDER BY id DESC")
     fun getAll(): LiveData<List<RecipeEntity>>
@@ -49,10 +54,10 @@ interface RecipesActions {
     fun removeByRecId(id: Long)
 
     @Query("SELECT*FROM recipes WHERE category = :category")
-    fun selectOneCategory(category: String?):LiveData<List<RecipeEntity>>
+    fun selectOneCategory(category: String):LiveData<List<RecipeEntity>>
 
-
-
+    @Query("SELECT*FROM recipes WHERE category = :category AND isFavorite = 1")
+    fun selectOneCategoryFromFavorites(category: String):LiveData<List<RecipeEntity>>
 
 
 }

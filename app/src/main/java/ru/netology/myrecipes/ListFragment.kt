@@ -80,7 +80,6 @@ class ListFragment : Fragment() {
             android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 if (query.isBlank()) return false
-                adapter.submitList(viewModel.data.value?.filter { it.name.contains(query, true) })
                 return true
             }
 
@@ -103,11 +102,14 @@ class ListFragment : Fragment() {
             var checkedItem = 0
             MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(resources.getString(R.string.category))
-                .setSingleChoiceItems(singleItems, checkedItem) { dialog, which ->
+                .setSingleChoiceItems(singleItems, checkedItem) { _, which ->
                     checkedItem = which
-                }.setPositiveButton(resources.getString(R.string.save_me)) { dialog, which ->
+                }.setPositiveButton(resources.getString(R.string.save_me)) { _,_ ->
                     if (checkedItem == 0) adapter.submitList(viewModel.data.value)
-                    else adapter.submitList(viewModel.data.value?.filter { it.category == singleItems[checkedItem] })
+                    else
+                        viewModel.getFiltered(singleItems[checkedItem]).observe(viewLifecycleOwner){ filtered ->
+                            adapter.submitList(filtered)
+                        }
                 }.show()
         }
         val callback: ItemTouchHelper.Callback = Callback(adapter)

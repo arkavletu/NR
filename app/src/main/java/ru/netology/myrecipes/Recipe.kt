@@ -12,6 +12,6 @@ data class Recipe(
 
     //var stepsIds: Array<Long> = emptyArray()
     ){
-    var steps: List<Step> = emptyList()
+    //var steps: List<Step> = emptyList()
 
 }
