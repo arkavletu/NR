@@ -23,21 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".IntentImageActivity"
-            android:exported="true">
-        <intent-filter
-            android:scheme="file:URI"
-            tools:ignore="AppLinkUrlError">
-            <action
-                android:name="android.intent.action.GET_CONTENT"
-                tools:ignore="AppLinkUrlError" />
 
-            <data android:mimeType="image/*" />
-
-            <category android:name="android.intent.category.DEFAULT" />
-        </intent-filter>
-        </activity>
     </application>
 
 </manifest>
