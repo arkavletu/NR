@@ -48,6 +48,12 @@ class ListFragment : Fragment() {
 
         }
 
+        viewModel.navigateToNewScreenEvent.observe(this){
+            val direction = ListFragmentDirections.actionListFragmentToRecipeContentFragment()
+            findNavController().navigate(direction)
+
+        }
+
         viewModel.navigateToPostFragment.observe(this)
         { id ->
             val direction = ListFragmentDirections.actionListFragmentToSingleRecipeFragment(id)
@@ -74,7 +80,9 @@ class ListFragment : Fragment() {
             adapter.submitList(recipes)
         }
 
-
+        it.fab.setOnClickListener{
+            viewModel.onFabClicked()
+        }
         val searchView = it.includedList.search
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             android.widget.SearchView.OnQueryTextListener {

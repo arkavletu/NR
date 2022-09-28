@@ -22,7 +22,7 @@
         android:id="@+id/descriptionStep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@String/description"
+        android:hint="@string/description"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText

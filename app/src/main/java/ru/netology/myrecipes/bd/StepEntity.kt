@@ -12,7 +12,7 @@ class StepEntity (
     @ColumnInfo(name="text")
     val text: String,
     @ColumnInfo(name="imageUrl")
-    val imageUrl: String? = "null",
+    val imageUrl: String,
     @ColumnInfo(name="recipeId")
     val recipeId: Long
 )

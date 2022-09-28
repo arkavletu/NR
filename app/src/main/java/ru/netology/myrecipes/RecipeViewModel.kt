@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.lifecycle.*
 import ru.netology.myrecipes.bd.AppBd
 import ru.netology.myrecipes.bd.toModel
+import ru.netology.myrecipes.bd.toStepEntity
 
 class RecipeViewModel(
     application: Application
@@ -15,18 +16,17 @@ class RecipeViewModel(
         ).recipesActions
     )
     var currentFavorites = repo.getFavorites()
-    //var newUri: Uri? = null
     val data by repo::data
     val steps by repo::steps
     var currentRecipe = MutableLiveData<Recipe?>(null)
     val navigateToEditScreenEvent = SingleLiveEvent<Array<String>?>()
+    val navigateToNewScreenEvent = SingleLiveEvent<Unit>()
     val ImageEvent = SingleLiveEvent<Unit>()
     val navigateToPostFragment = SingleLiveEvent<Long>()
     val navigateToFavoritesFragment = SingleLiveEvent<Unit>()
     var contentArray: Array<String> = emptyArray()
     val addStepEvent = SingleLiveEvent<Unit>()
-   // val stepsMap = MutableLiveData<Map<Long,List<Step>>>()
-    //var currentSteps = MutableLiveData<MutableList<Step?>>(null)
+    var currentSteps = MutableLiveData<List<Step?>>(null)
     //fun getRecipeAndSteps(id: Long) = repo.getRecipeAndSteps(id)
     fun onSaveClicked(array: Array<String>) {
         if (array[0].isBlank() || array[1].isBlank() || array[2].isBlank()) return
@@ -38,16 +38,17 @@ class RecipeViewModel(
             imageUrl = array[3]
 
         ) ?: Recipe(
-            id = RecipeRepo.NEWID,
+            //id = RecipeRepo.NEWID,
             author = array[0],
             name = array[1],
             category = array[2],
             imageUrl = array[3]
         )
-        currentRecipe.value = repo.save(recipe).toModel()
+        repo.save(recipe)
+        currentRecipe.value = recipe
         repo.steps.value?.forEach {
-            if (it.recipeId != 0L && it.id != 0L) return@forEach
-            repo.updateStep(currentRecipe.value?.id?:return@forEach)
+            if (it.recipeId == 0L) repo.updateStep(currentRecipe.value?.id?: return)
+
         }
 
         currentRecipe.value = null
@@ -59,7 +60,7 @@ class RecipeViewModel(
 
 
     override fun onFabClicked() {
-        navigateToEditScreenEvent.call()
+        navigateToNewScreenEvent.call()
     }
 
 
@@ -79,7 +80,6 @@ class RecipeViewModel(
     }
 
 
-
     override fun onPostClicked(id: Long) {
         navigateToPostFragment.value = id
 
@@ -94,9 +94,9 @@ class RecipeViewModel(
     }
 
 
-    fun saveStep(text:String, uri:String?){
-       val step = Step(text = text, imageUrl = "uri", recipeId = currentRecipe.value?.id?:0)
-
+    fun saveStep(text:String, uri:String){
+       val step = Step(text = text, imageUrl = uri, recipeId = currentRecipe.value?.id?:0L)
+        //currentSteps.value = currentSteps.value?.plus(listOf(step))
         repo.insertStep(step)
     }
 

@@ -38,12 +38,6 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId){
-//            R.id.search -> true
-//            R.id.filter -> true
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
+
 
 }

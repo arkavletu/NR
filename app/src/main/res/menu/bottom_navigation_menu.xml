@@ -10,9 +10,9 @@
         android:enabled="true"
         android:icon="@drawable/not_favorite"
         android:title="@string/favorites"/>
-    <item
-        android:id="@+id/recipeContentFragment"
-        android:enabled="true"
-        android:icon="@drawable/plus_24"
-        android:title="@string/new_recipe"/>
+<!--    <item-->
+<!--        android:id="@+id/recipeContentFragment"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/plus_24"-->
+<!--        android:title="@string/new_recipe"/>-->
 </menu>

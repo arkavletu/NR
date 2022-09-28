@@ -1,5 +1,6 @@
 package ru.netology.myrecipes
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -42,10 +43,9 @@ class StepsAdapter(
             with(binding)
             {
                 textStep.text = step.text
-//вставки картинки нет, ибо она еще не вставилась в рецепт.
-                if(step.imageUrl.isNullOrBlank()) {
+                if(step.imageUrl.isBlank()) {
                     imageStep.setImageResource(R.drawable.no_image)
-                }
+                } else imageStep.setImageURI(Uri.parse(step.imageUrl))
 
             }
         }

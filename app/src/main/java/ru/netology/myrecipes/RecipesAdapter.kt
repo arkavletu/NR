@@ -72,10 +72,6 @@ class RecipesAdapter(
             binding.favor.setOnClickListener {
                 listener.onLikeClicked(recipe)
             }
-//            binding.more.setOnClickListener {
-////думала разворачивать карточку вместо отдельного экрана - не работает пока
-//                binding.listSteps.visibility = View.VISIBLE
-//            }
 
         }
 
@@ -91,9 +87,7 @@ class RecipesAdapter(
                 if(recipe.imageUrl.isBlank()) {
                     image.setImageResource(R.drawable.no_image)
                 } else image.setImageURI(parse(recipe.imageUrl))
-//                val stepsAdapter = StepsAdapter(actionListener)//это, наверное, не здесь надо делать
-//                listSteps.adapter = stepsAdapter
-//                stepsAdapter.submitList(recipe.steps)
+
             }
         }
     }

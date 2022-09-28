@@ -35,31 +35,6 @@ class RecipeContentFragment : Fragment() {
             findNavController().navigate(direction)
         }
 
-        viewModel.ImageEvent.observe(this)
-        {
-            val pickFromGallery =
-                Intent().apply {
-                    action = Intent.ACTION_GET_CONTENT
-                    type = "image/*"
-                    putExtra("uri", uri)
-                }
-            startActivity(pickFromGallery)
-        }
-        setFragmentResultListener(REQUEST_KEY_URI) { requestKey, bundle ->
-            registerForActivityResult(ActivityResultContracts.GetContent()) {
-                requireActivity().contentResolver.takePersistableUriPermission(
-                    requireNotNull(it),
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION
-
-                )
-                if (requestKey != REQUEST_KEY_URI) return@registerForActivityResult
-                uri = Uri.parse(
-                    bundle.getString(
-                        RESULT_KEY_URI
-                    )
-                ) ?: return@registerForActivityResult
-            }
-        }
     }
 
 
@@ -85,14 +60,19 @@ class RecipeContentFragment : Fragment() {
         binding.enterName.editText?.setText(args.name)
         binding.enterCategory.editText?.setText(args.category)
         binding.enterAuthor.requestFocus()
-//убей не пойму почему не работает
+
+        val addingMainImageLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            uri ?: return@registerForActivityResult
+            requireActivity().contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+            binding.imagePreview.setImageURI(uri)
+            this.uri = uri
+        }
+        viewModel.ImageEvent.observe(viewLifecycleOwner) {
+            addingMainImageLauncher.launch(arrayOf("image/*"))
+        }
         binding.pick.setOnClickListener {
             viewModel.onImageClicked()
-            val resultBundle = Bundle(1)
-            resultBundle.putString(RESULT_KEY_URI, uri.toString())
-            setFragmentResult(REQUEST_KEY_URI, resultBundle)
-            binding.imagePreview.setImageURI(uri)
-            binding.enterUri.text = uri.toString()//сделала для контроля, уберу потом
         }
         binding.ok.setOnClickListener {
             val text = binding.enterAuthor.editText?.text.toString()
@@ -121,16 +101,16 @@ class RecipeContentFragment : Fragment() {
         binding.addStep.setOnClickListener {
             viewModel.addStep()
         }
+
         val callback: ItemTouchHelper.Callback = Callback(stepAdapter)
         val touchHelper = ItemTouchHelper(callback)
         touchHelper.attachToRecyclerView(binding.listSteps)
+
     }.root
 
 
     companion object {
         const val REQUEST_KEY = "recipeAuthorRequestKey"
         const val RESULT_KEY = "recipeNewAuthor"
-        const val REQUEST_KEY_URI = "imageReq"
-        const val RESULT_KEY_URI = "imageRes"
     }
 }
