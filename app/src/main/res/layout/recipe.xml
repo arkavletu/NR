@@ -2,6 +2,7 @@
 
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:outlineProvider= "none"
     android:id="@+id/oneRecipe"
     android:layout_width="match_parent"
@@ -18,9 +19,8 @@
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="194dp"
-            android:layout_marginBottom="@dimen/common_space"
+            android:layout_width="304dp"
+            android:layout_height="222dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

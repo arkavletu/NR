@@ -75,6 +75,8 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ) = ListFragmentBinding.inflate(layoutInflater, container, false).also {
         val adapter = RecipesAdapter(viewModel)
+//        var data = adapter.data
+//        adapter.submitList(data)
         it.includedList.list.adapter = adapter
         viewModel.data.observe(viewLifecycleOwner) { recipes ->
             adapter.submitList(recipes)
