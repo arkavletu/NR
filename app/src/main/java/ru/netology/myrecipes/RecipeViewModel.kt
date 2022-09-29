@@ -38,7 +38,7 @@ class RecipeViewModel(
             imageUrl = array[3]
 
         ) ?: Recipe(
-            //id = RecipeRepo.NEWID,
+            id = RecipeRepo.NEWID,
             author = array[0],
             name = array[1],
             category = array[2],
@@ -47,9 +47,19 @@ class RecipeViewModel(
         repo.save(recipe)
         currentRecipe.value = recipe
         repo.steps.value?.forEach {
-            if (it.recipeId == 0L) repo.updateStep(currentRecipe.value?.id?: return)
-
+            if (it.recipeId == 0L) repo.updateStep(currentRecipe.value?.id ?: return)
         }
+//        repo.save(recipe)
+//        //currentRecipe.value = recipe
+//        currentSteps.value?.forEach {
+//            if (it?.recipeId == 0L) {
+//
+//                repo.updateStep(currentRecipe.value?.id?:recipe.id)
+//            }else{
+//                it?.copy(recipeId = recipe.id)?.let { it1 -> repo.insertStep(it1) }
+//            }
+//
+//        }
 
         currentRecipe.value = null
     }
@@ -95,8 +105,8 @@ class RecipeViewModel(
 
 
     fun saveStep(text:String, uri:String){
-       val step = Step(text = text, imageUrl = uri, recipeId = currentRecipe.value?.id?:0L)
-        //currentSteps.value = currentSteps.value?.plus(listOf(step))
+       val step = Step(text = text, imageUrl = uri, recipeId = currentRecipe.value?.id?:0L,id = 0L)
+       // currentSteps.value = currentSteps.value?.plus(listOf(step))
         repo.insertStep(step)
     }
 

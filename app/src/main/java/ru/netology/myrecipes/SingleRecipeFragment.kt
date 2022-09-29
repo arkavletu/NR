@@ -4,12 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.ItemTouchHelper
-import ru.netology.myrecipes.ItemTouchHelper.Callback
 import ru.netology.myrecipes.databinding.FragmentSingleRecipeBinding
 
 
@@ -24,16 +21,6 @@ class SingleRecipeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        setFragmentResultListener(RecipeContentFragment.REQUEST_KEY)
-        { requestKey, bundle ->
-            if (requestKey != RecipeContentFragment.REQUEST_KEY) return@setFragmentResultListener// edit here!!!
-            val newContent = bundle.getStringArray(
-                RecipeContentFragment.RESULT_KEY
-            ) ?: return@setFragmentResultListener
-            viewModel.contentArray = newContent
-            viewModel.onSaveClicked(newContent)
-        }
             viewModel.navigateToEditScreenEvent.observe(this)
             { initialContent ->
                 val direction =

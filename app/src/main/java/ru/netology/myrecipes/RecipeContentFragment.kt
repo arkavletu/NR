@@ -79,8 +79,8 @@ class RecipeContentFragment : Fragment() {
             val text2 = binding.enterName.editText?.text.toString()
             val text3 = binding.enterCategory.editText?.text.toString()
             val text4 = uri.toString()
-
-            if (!text.isBlank() && !text2.isBlank() && !text3.isBlank()&& !stepAdapter.currentList.isEmpty()) {
+                   // && !stepAdapter.data.isEmpty()
+            if (!text.isBlank() && !text2.isBlank() && !text3.isBlank()) {
                 val resultBundle = Bundle(1)
                 resultBundle.putStringArray(
                     RESULT_KEY,
