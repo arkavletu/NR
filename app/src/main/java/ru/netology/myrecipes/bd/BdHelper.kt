@@ -16,4 +16,8 @@ class BdHelper(
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
     }
+
+    override fun onDowngrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+
+    }
 }

@@ -1,9 +1,12 @@
 package ru.netology.myrecipes.bd
 
-import androidx.annotation.Nullable
+import androidx.lifecycle.MutableLiveData
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import ru.netology.myrecipes.Recipe
+import ru.netology.myrecipes.Step
 
 @Entity(tableName = "recipes")
 class RecipeEntity (
@@ -16,5 +19,27 @@ class RecipeEntity (
     @ColumnInfo(name = "isFavorite")
     var isFavorite: Boolean,
     @ColumnInfo(name = "imageUrl")
-    val imageUrl: String
+    val imageUrl: String,
+    @TypeConverters(StepConverter::class)
+    val steps: MutableLiveData<MutableList<Step>>
+){}
+fun RecipeEntity.toModel() = Recipe(
+    id = id,
+    name = name,
+    author = author,
+    category = category,
+    isFavorite = isFavorite,
+    imageUrl = imageUrl,
+    steps = steps
+)
+
+fun Recipe.toEntity() = RecipeEntity(
+    id = id,
+    name = name,
+    author = author,
+    category = category,
+    isFavorite = isFavorite,
+    imageUrl = imageUrl,
+    steps = steps
+
 )

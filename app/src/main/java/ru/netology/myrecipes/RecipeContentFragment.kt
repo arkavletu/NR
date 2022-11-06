@@ -10,7 +10,6 @@ import android.widget.AutoCompleteTextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -32,6 +31,8 @@ class RecipeContentFragment : Fragment() {
         viewModel.addStepEvent.observe(this) {
             val direction =
                 RecipeContentFragmentDirections.actionRecipeContentFragmentToAddStepFragment()
+//                    viewModel.contentArray[0],
+//                    viewModel.contentArray[1],viewModel.contentArray[2])
             findNavController().navigate(direction)
         }
 
@@ -50,7 +51,23 @@ class RecipeContentFragment : Fragment() {
         val stepAdapter = StepsAdapter(viewModel)
         binding.listSteps.adapter = stepAdapter
 
-       viewModel.getStepsForRecipe(viewModel.currentRecipe.value?.id?:0L).observe(viewLifecycleOwner){steps ->
+        fun saveResult(){
+            val text = binding.enterAuthor.editText?.text.toString()
+            val text2 = binding.enterName.editText?.text.toString()
+            val text3 = binding.enterCategory.editText?.text.toString()
+            val text4 = uri.toString()
+            // && !stepAdapter.data.isEmpty()
+            if (!text.isBlank() && !text2.isBlank() && !text3.isBlank()) {
+                val resultBundle = Bundle(1)
+                resultBundle.putStringArray(
+                    RESULT_KEY,
+                    arrayOf(text, text2, text3, text4)
+                )
+                setFragmentResult(REQUEST_KEY, resultBundle)
+            }
+        }
+
+       viewModel.currentSteps.observe(viewLifecycleOwner){steps ->
            stepAdapter.submitList(steps)
        }
 
@@ -75,36 +92,24 @@ class RecipeContentFragment : Fragment() {
             viewModel.onImageClicked()
         }
         binding.ok.setOnClickListener {
-            val text = binding.enterAuthor.editText?.text.toString()
-            val text2 = binding.enterName.editText?.text.toString()
-            val text3 = binding.enterCategory.editText?.text.toString()
-            val text4 = uri.toString()
-                   // && !stepAdapter.data.isEmpty()
-            if (!text.isBlank() && !text2.isBlank() && !text3.isBlank()) {
-                val resultBundle = Bundle(1)
-                resultBundle.putStringArray(
-                    RESULT_KEY,
-                    arrayOf(text, text2, text3, text4)
-                )
-                setFragmentResult(REQUEST_KEY, resultBundle)
-            }
-
-
-
+            saveResult()
             binding.enterAuthor.editText?.text?.clear()
             binding.enterName.editText?.text?.clear()
             binding.enterCategory.editText?.text?.clear()
 
-            findNavController().popBackStack()
+            //findNavController().popBackStack()
         }
 
         binding.addStep.setOnClickListener {
+            saveResult()
             viewModel.addStep()
         }
 
         val callback: ItemTouchHelper.Callback = Callback(stepAdapter)
         val touchHelper = ItemTouchHelper(callback)
         touchHelper.attachToRecyclerView(binding.listSteps)
+
+
 
     }.root
 

@@ -1,15 +1,14 @@
 package ru.netology.myrecipes.bd
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 
 @Database(
-    entities = [RecipeEntity::class,StepEntity::class],
+    entities = [RecipeEntity::class],
 
-    version = 2
+    version = 1
 )
+@TypeConverters(StepConverter::class)
 abstract class AppBd: RoomDatabase() {
     abstract val recipesActions: RecipesActions
 
@@ -26,6 +25,8 @@ abstract class AppBd: RoomDatabase() {
 
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
             context,AppBd::class.java,"AppBd"
-        ).allowMainThreadQueries().build()
+        ).allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }

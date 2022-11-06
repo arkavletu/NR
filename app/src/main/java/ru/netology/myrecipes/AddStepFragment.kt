@@ -31,7 +31,8 @@ class AddStepFragment: Fragment() {
     )= AddStepFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
       binding.ok.setOnClickListener {
           viewModel.saveStep(binding.descriptionStep.editText?.text.toString(),uri.toString())
-          findNavController().popBackStack()
+          val direction = AddStepFragmentDirections.actionAddStepFragmentToRecipeContentFragment()
+          findNavController().navigate(direction)
       }
         binding.pick.setOnClickListener {
             viewModel.onImageClicked()

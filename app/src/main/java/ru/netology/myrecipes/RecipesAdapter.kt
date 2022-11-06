@@ -88,6 +88,7 @@ class RecipesAdapter(
                     image.setImageResource(R.drawable.no_image)
                 } else image.setImageURI(parse(recipe.imageUrl))
 
+
             }
         }
     }

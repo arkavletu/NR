@@ -75,5 +75,13 @@
         android:id="@+id/addStepFragment"
         android:name="ru.netology.myrecipes.AddStepFragment"
         android:label="add_step_fragment"
-        tools:layout="@layout/add_step_fragment" />
+        tools:layout="@layout/add_step_fragment" >
+        <action
+            android:id="@+id/action_addStepFragment_to_recipeContentFragment"
+            app:destination="@id/recipeContentFragment" />
+        <argument
+            android:name="recipeId"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
 </navigation>

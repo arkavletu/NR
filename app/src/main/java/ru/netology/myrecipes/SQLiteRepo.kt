@@ -10,14 +10,14 @@ class SQLiteRepo(
     override var data = recipeActions.getAll().map { entities ->
         entities.map { it.toModel() }
     }
-    override val steps = recipeActions.getAllSteps().map { entities ->
-        entities.map { it.toStepModel() }
-    }
+//    override val steps = recipeActions.getAllSteps().map { entities ->
+//        entities.map { it.toStepModel() }
+//    }
 
-    override fun getStepsForRecipe(id: Long): LiveData<List<Step>> =
-        recipeActions.getStepsForRecipe(id).map { entities ->
-            entities.map { it.toStepModel() }
-        }
+//    override fun getStepsForRecipe(id: Long): LiveData<List<Step>> =
+//        recipeActions.getStepsForRecipe(id).map { entities ->
+//            entities.map { it.toStepModel() }
+//        }
 
 
     override fun like(rId: Long) {
@@ -26,12 +26,12 @@ class SQLiteRepo(
 
     override fun delete(rId: Long) {
         recipeActions.removeById(rId)
-        recipeActions.removeByRecId(rId)
+        //recipeActions.removeByRecId(rId)
     }
 
     override fun save(recipe: Recipe): RecipeEntity {
         if (recipe.id == RecipeRepo.NEWID) recipeActions.insert(recipe.toEntity())
-        else recipeActions.updateContentById(recipe.id, recipe.author, recipe.name,recipe.category,recipe.imageUrl)
+        else recipeActions.updateContentById(recipe.id, recipe.author, recipe.name,recipe.category,recipe.imageUrl, recipe.steps.value)
         return recipe.toEntity()
     }
 
@@ -55,16 +55,16 @@ class SQLiteRepo(
                 it.toModel()
             }
         }
-    override fun insertStep(step: Step){
-        recipeActions.insertStep(step.toStepEntity())
-    }
+//    override fun insertStep(step: Step){
+//        recipeActions.insertStep(step.toStepEntity())
+//    }
+//
+//    override fun updateStep(id: Long) {
+//        recipeActions.updateStepRecipeId(id)
+//    }
 
-    override fun updateStep(id: Long) {
-        recipeActions.updateStepRecipeId(id)
-    }
-
-//    override fun getRecipeAndSteps(id: Long): LiveData<List<RecipeAndSteps>> =
-//        recipeActions.getRecipesAndSteps(id)
+    override fun get(id: Long): RecipeEntity =
+        recipeActions.getById(id)
 
 
 }
