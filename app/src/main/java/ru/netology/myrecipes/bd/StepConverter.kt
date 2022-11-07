@@ -8,16 +8,16 @@ import ru.netology.myrecipes.Step
 
 class StepConverter {
     @TypeConverter
-    fun mapListToString(value: MutableList<Step>): String {
+    fun mapListToString(value: List<Step>): String {
     val gson = Gson()
-    val type = object : TypeToken<MutableList<Step>>() {}.type
+    val type = object : TypeToken<List<Step>>() {}.type
     return gson.toJson(value, type)
     }
 
     @TypeConverter
-    fun mapStringToList(value: String): MutableList<Step> {
+    fun mapStringToList(value: String): List<Step> {
         val gson = Gson()
-        val type = object : TypeToken<MutableList<Step>>() {}.type
+        val type = object : TypeToken<List<Step>>() {}.type
         return gson.fromJson(value, type)
     }
 }

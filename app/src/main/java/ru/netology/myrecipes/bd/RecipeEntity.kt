@@ -1,6 +1,5 @@
 package ru.netology.myrecipes.bd
 
-import androidx.lifecycle.MutableLiveData
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -21,7 +20,8 @@ class RecipeEntity (
     @ColumnInfo(name = "imageUrl")
     val imageUrl: String,
     @TypeConverters(StepConverter::class)
-    val steps: MutableLiveData<MutableList<Step>>
+    @ColumnInfo(defaultValue = "No value")
+    val steps: List<Step>
 ){}
 fun RecipeEntity.toModel() = Recipe(
     id = id,
