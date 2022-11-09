@@ -43,6 +43,11 @@
         <action
             android:id="@+id/action_recipeContentFragment_to_addStepFragment"
             app:destination="@id/addStepFragment" />
+        <argument
+            android:name="stepIds"
+            app:argType="long[]"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/singleRecipeFragment"

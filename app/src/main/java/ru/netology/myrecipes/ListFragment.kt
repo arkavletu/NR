@@ -28,7 +28,7 @@ class ListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        viewModel.firstTest()
         setFragmentResultListener(RecipeContentFragment.REQUEST_KEY)
         { requestKey, bundle ->
             if (requestKey != RecipeContentFragment.REQUEST_KEY) return@setFragmentResultListener

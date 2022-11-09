@@ -31,7 +31,11 @@ class AddStepFragment: Fragment() {
     )= AddStepFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
       binding.ok.setOnClickListener {
           viewModel.saveStep(binding.descriptionStep.editText?.text.toString(),uri.toString())
-          val direction = AddStepFragmentDirections.actionAddStepFragmentToRecipeContentFragment()
+          val direction = AddStepFragmentDirections.actionAddStepFragmentToRecipeContentFragment(
+              viewModel.currentRecipe.value?.author,
+              viewModel.currentRecipe.value?.name,
+              viewModel.currentRecipe.value?.category
+          )
           findNavController().navigate(direction)
       }
         binding.pick.setOnClickListener {

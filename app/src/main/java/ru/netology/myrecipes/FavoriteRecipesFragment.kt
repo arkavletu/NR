@@ -25,15 +25,7 @@ class FavoriteRecipesFragment : Fragment() {
 
 
 
-        setFragmentResultListener(RecipeContentFragment.REQUEST_KEY)
-        { requestKey, bundle ->
-            if (requestKey != RecipeContentFragment.REQUEST_KEY) return@setFragmentResultListener
-            val newContent = bundle.getStringArray(
-                RecipeContentFragment.RESULT_KEY
-            ) ?: return@setFragmentResultListener
-            viewModel.contentArray = newContent
-            viewModel.onSaveClicked(newContent)
-        }
+
 
 
 

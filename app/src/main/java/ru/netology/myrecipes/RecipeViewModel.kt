@@ -26,15 +26,22 @@ class RecipeViewModel(
     val addStepEvent = SingleLiveEvent<Unit>()
     var currentSteps = MutableLiveData<MutableList<Step>>(null)
     //fun getRecipeAndSteps(id: Long) = repo.getRecipeAndSteps(id)
+    val recipe = Recipe("test","test", Categories.ASIAN.name,steps =
+    listOf(Step("testStep",""))
+    )
+    fun firstTest() = repo.save(recipe)
     fun onSaveClicked(array: Array<String>) {
         if (array[0].isBlank() || array[1].isBlank() || array[2].isBlank()) return
 
-        val recipe = currentRecipe.value?.copy(
-            author = array[0],
-            name = array[1],
-            category = array[2],
-            imageUrl = array[3],
-        ) ?: currentSteps.value?.toList()?.let {
+        val recipe = currentSteps.value?.toList()?.let {
+            currentRecipe.value?.copy(
+                author = array[0],
+                name = array[1],
+                category = array[2],
+                imageUrl = array[3],
+                steps = it
+            )
+        } ?: currentSteps.value?.toList()?.let {
             Recipe(
                 id = RecipeRepo.NEWID,
                 author = array[0],
@@ -44,10 +51,9 @@ class RecipeViewModel(
                 steps = it
             )
         }
-        if (recipe != null) {
-            repo.save(recipe)
-        }
         currentRecipe.value = recipe
+        currentRecipe.value?.let { repo.save(it) }
+
 //        repo.steps.value?.forEach {
 //            if (it.recipeId == 0L) repo.updateStep(currentRecipe.value?.id ?: return)
 //        }
@@ -110,26 +116,15 @@ class RecipeViewModel(
     }
 
 
-    fun saveStep(text:String, uri:String){
+    fun saveStep(text:String, uri:String){//nullpointer
         if (currentRecipe.value!=null) {
             val step = Step(text, uri, recipeId = currentRecipe.value!!.id)
-            val steps = currentSteps.value
-            steps?.plus(step)
-            currentSteps.value = steps!!
-            //currentRecipe.value!!.steps = currentSteps.value.toList()
+            currentRecipe.value!!.steps.plus(step)
         }
-//        val newRecipe = currentRecipe.value?.id?.let { repo.get(it) }?.toModel()
-//        if (step != null) {
-//            newRecipe?.steps = newRecipe?.steps?.plus(step)!!
-//            currentRecipe.value = newRecipe
-//        }
-//        if (newRecipe != null) {
-//            repo.save(newRecipe)
-//        }
+
 
     }
 
-    //override fun getStepsForRecipe(id: Long) = repo.getStepsForRecipe(id)
 
 
 }

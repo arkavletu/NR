@@ -40,6 +40,7 @@ class SingleRecipeFragment : Fragment() {
             savedInstanceState: Bundle?
         ) = FragmentSingleRecipeBinding.inflate(layoutInflater, container, false).also {
             val id = args.recipeId
+            viewModel.currentSteps.value = viewModel.get(id).steps.toMutableList()
             val adapter = RecipesAdapter(viewModel)
             it.oneRecipe.list.adapter = adapter
             viewModel.data.observe(viewLifecycleOwner) { recipes ->
