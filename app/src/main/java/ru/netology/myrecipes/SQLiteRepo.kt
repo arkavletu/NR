@@ -10,9 +10,7 @@ class SQLiteRepo(
     override var data = recipeActions.getAll().map { entities ->
         entities.map { it.toModel() }
     }
-//    override val steps = recipeActions.getAllSteps().map { entities ->
-//        entities.map { it.toStepModel() }
-//    }
+
 
 //    override fun getStepsForRecipe(id: Long): LiveData<List<Step>> =
 //        recipeActions.getStepsForRecipe(id).map { entities ->
@@ -55,13 +53,10 @@ class SQLiteRepo(
                 it.toModel()
             }
         }
-//    override fun insertStep(step: Step){
-//        recipeActions.insertStep(step.toStepEntity())
-//    }
-//
-//    override fun updateStep(id: Long) {
-//        recipeActions.updateStepRecipeId(id)
-//    }
+
+    override fun addStep(steps: List<Step>,id:Long){
+        recipeActions.addStep(steps,id)
+    }
 
     override fun get(id: Long): RecipeEntity =
         recipeActions.getById(id)

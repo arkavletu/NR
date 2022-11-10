@@ -53,8 +53,9 @@ interface RecipesActions {
 
     @Query("SELECT*FROM recipes WHERE id = :id")
     fun getById(id:Long): RecipeEntity
-//    @Query("DELETE FROM steps WHERE recipeId = :id")
-//    fun removeByRecId(id: Long)
+
+    @Query("UPDATE recipes SET steps = :steps WHERE id = :id")
+    fun addStep(steps:List<Step>,id:Long)
 
     @Query("SELECT*FROM recipes WHERE category = :category")
     fun selectOneCategory(category: String):LiveData<List<RecipeEntity>>

@@ -14,7 +14,7 @@ interface RecipeRepo {
     fun delete(rId: Long)
     fun save(recipe: Recipe): RecipeEntity
     fun get(id: Long):RecipeEntity
-//    fun insertStep(step:Step)
+    fun addStep(steps:List<Step>,id:Long)
 //    fun updateStep(id: Long)
     //fun getRecipeAndSteps(id: Long):LiveData<List<RecipeAndSteps>>
     companion object{

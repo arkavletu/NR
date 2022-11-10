@@ -56,13 +56,13 @@ class RecipeContentFragment : Fragment() {
             val text2 = binding.enterName.editText?.text.toString()
             val text3 = binding.enterCategory.editText?.text.toString()
             val text4 = uri.toString()
-            val ids = arrayOf(viewModel.currentRecipe.value?.steps?.map { it.id })
+            //val ids = arrayOf(viewModel.currentRecipe.value?.steps?.map { it.id })
             // && !stepAdapter.data.isEmpty()
             if (!text.isBlank() && !text2.isBlank() && !text3.isBlank()) {
                 val resultBundle = Bundle(1)
                 resultBundle.putStringArray(
                     RESULT_KEY,
-                    arrayOf(text, text2, text3, text4,ids.toString())
+                    arrayOf(text, text2, text3, text4)
                 )
                 setFragmentResult(REQUEST_KEY, resultBundle)
             }
@@ -102,7 +102,7 @@ class RecipeContentFragment : Fragment() {
         }
 
         binding.addStep.setOnClickListener {
-            //saveResult()
+            saveResult()
             viewModel.addStep()
         }
 

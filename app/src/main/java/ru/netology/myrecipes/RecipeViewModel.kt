@@ -117,10 +117,20 @@ class RecipeViewModel(
 
 
     fun saveStep(text:String, uri:String){//nullpointer
+        val step = Step(text, uri, recipeId = currentRecipe.value!!.id)
         if (currentRecipe.value!=null) {
-            val step = Step(text, uri, recipeId = currentRecipe.value!!.id)
-            currentRecipe.value!!.steps.plus(step)
+
+            currentRecipe.value?.steps?.plus(step)
+            currentSteps.value?.plus(step)
+        }else {
+            currentRecipe.value?.steps = listOf(step)
+            currentSteps.value = listOf(step).toMutableList()
         }
+        currentSteps.value?.toList()?.let { currentRecipe.value?.id?.let { it1 ->
+            repo.addStep(it,
+                it1
+            )
+        } }
 
 
     }
